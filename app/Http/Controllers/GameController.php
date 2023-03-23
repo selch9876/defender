@@ -15,4 +15,14 @@ class GameController extends Controller
     {   
         return view('game.index');
     }
+
+    public function create()
+    {
+        return view('game.create');
+    }
+
+    public function store(Request $request)
+    {
+
+    }
 }
