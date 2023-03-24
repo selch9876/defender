@@ -36,4 +36,14 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    public function selch()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'name' => 'Selch',
+                'email' => 'selcukoktay@gmail.com',
+            ];
+        });
+    }
 }

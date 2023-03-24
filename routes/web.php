@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\GameController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,4 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::resource('/game', GameController::class);
+Route::resource('/character', CharacterController::class);
