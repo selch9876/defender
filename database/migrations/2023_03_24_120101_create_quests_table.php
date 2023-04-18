@@ -21,6 +21,7 @@ class CreateQuestsTable extends Migration
             $table->string('item_reward');
             $table->unsignedInteger('target_amount');
             $table->timestamps();
+            $table->unsignedBigInteger('enemy_id')->nullable();
             $table->foreign('enemy_id')->references('id')->on('enemies')->onDelete('cascade');
         });
     }

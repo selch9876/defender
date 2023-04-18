@@ -27,6 +27,12 @@
                                         <th>{{ __('Name') }}</th>
                                         <th>{{ __('Class') }}</th>
                                         <th>{{ __('Level') }}</th>
+                                        <th>{{ __('Experience') }}</th>
+                                        <th>{{ __('HP') }}</th>
+                                        <th>{{ __('MP') }}</th>
+                                        <th>{{ __('STR') }}</th>
+                                        <th>{{ __('DEX') }}</th>
+                                        <th>{{ __('INT') }}</th>
                                         <th>{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
@@ -34,8 +40,14 @@
                                     @foreach($characters as $character)
                                         <tr>
                                             <td>{{ $character->name }}</td>
-                                            <td>{{ $character->class }}</td>
+                                            <td>{{ $character->playerClass->name }}</td>
                                             <td>{{ $character->level }}</td>
+                                            <td>{{ $character->xp }}</td>
+                                            <td>{{ $character->hp }}</td>
+                                            <td>{{ $character->mp }}</td>
+                                            <td>{{ $character->str }}</td>
+                                            <td>{{ $character->dex }}</td>
+                                            <td>{{ $character->int }}</td>
                                             <td>
                                                 <a href="{{ route('character.show', $character->id) }}" class="btn btn-sm btn-primary">{{ __('View') }}</a>
                                                 <a href="{{ route('character.edit', $character->id) }}" class="btn btn-sm btn-secondary">{{ __('Edit') }}</a>

@@ -54,6 +54,7 @@
                             <div class="hidden fixed top-0.5 right-150 px-6 py-3 sm:block">
                                 @auth
                                     <a href="{{ url('/character') }}" class="text-sm">Characters</a>
+                                    <a href="{{ url('/player-class') }}" class="text-sm">Classes</a>
                                 @else
                                     <a href="{{ route('login') }}" class="text-sm">Log in</a>
             

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PlayerClass;
 use Illuminate\Database\Seeder;
 
 class PlayerClassSeeder extends Seeder
@@ -13,6 +14,20 @@ class PlayerClassSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $warrior = PlayerClass::factory()
+        ->warrior()
+        ->create();
+
+        $wizard = PlayerClass::factory()
+        ->wizard()
+        ->create();
+
+        $priest = PlayerClass::factory()
+        ->priest()
+        ->create();
+
+        $rogue = PlayerClass::factory()
+        ->rogue()
+        ->create();
     }
 }

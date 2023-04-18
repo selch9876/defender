@@ -11,7 +11,6 @@ class Character extends Model
 
     protected $fillable = [
         'name',
-        'class',
         'xp',
         'level',
         'hp',
@@ -30,7 +29,7 @@ class Character extends Model
 
     public function playerClass()
     {
-        return $this->belongsTo(PlayerClass::class);
+        return $this->belongsTo(PlayerClass::class, 'class_id');
     }
 
     public function battleLogs()
@@ -63,4 +62,6 @@ class Character extends Model
         $this->dex += 2; // Increase dexterity by 2
         $this->int += 2; // Increase intelligence by 2
     }
+
+    
 }

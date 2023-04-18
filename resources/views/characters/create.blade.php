@@ -29,15 +29,56 @@
                                 <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Class') }}</label>
 
                                 <div class="col-md-6">
-                                    <select id="class" class="form-control @error('class') is-invalid @enderror" name="class" required>
+                                    <select id="class_id" class="form-control @error('class_id') is-invalid @enderror" name="class_id" required>
                                         <option value="" selected disabled>Select a class</option>
-                                        <option value="Warrior" >Warrior</option>
-                                        <option value="Priest" >Priest</option>
-                                        <option value="Mage">Mage</option>
-                                        <option value="Rogue">Rogue</option>
+                                        @foreach($playerClasses as $playerClass)
+                                        <option value="{{ $playerClass->id }}">{{ $playerClass->name }}</option>
+                                        @endforeach
                                     </select>
 
                                     @error('class')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="str" class="col-md-4 col-form-label text-md-right">{{ __('Strenght') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="str" type="number" min="10" max="100" class="form-control @error('str') is-invalid @enderror" name="str" value="{{ old('str') }}" required autocomplete="str" autofocus>
+
+                                    @error('str')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="dex" class="col-md-4 col-form-label text-md-right">{{ __('Dexterity') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="dex" type="number" min="10" max="100" class="form-control @error('dex') is-invalid @enderror" name="dex" value="{{ old('dex') }}" required autocomplete="dex" autofocus>
+
+                                    @error('dex')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="int" class="col-md-4 col-form-label text-md-right">{{ __('Inteligence') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="int" type="number" min="10" max="100" class="form-control @error('int') is-invalid @enderror" name="int" value="{{ old('int') }}" required autocomplete="int" autofocus>
+
+                                    @error('int')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

@@ -21,7 +21,7 @@ class CreatePlayerClassesTable extends Migration
             $table->unsignedInteger('base_health');
             $table->unsignedInteger('base_resistance');
             $table->unsignedInteger('base_attack');
-            $table->unsignedInteger('base_defense');
+            $table->unsignedInteger('base_defence');
             $table->timestamps();
         });
     }

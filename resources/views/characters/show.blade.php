@@ -20,9 +20,67 @@
                             <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Class') }}</label>
 
                             <div class="col-md-6">
-                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->class }}" disabled>
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->playerClass->name  }}" disabled>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Experience') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->xp  }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Level') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->level  }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('HP') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->hp  }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('MP') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->mp  }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Strenght') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->str  }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Dexterity') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->dex  }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Inteligence') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->int  }}" disabled>
+                            </div>
+                        </div>
+
+                        
 
                         <!-- Additional character details -->
 

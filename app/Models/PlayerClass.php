@@ -15,7 +15,7 @@ class PlayerClass extends Model
         'base_health',
         'base_resistance',
         'base_attack',
-        'base_defense',
+        'base_defence',
         'special_ability',
         // add any other fields you want to store
     ];

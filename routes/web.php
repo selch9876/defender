@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\PlayerClassController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,4 @@ require __DIR__.'/auth.php';
 
 Route::resource('/game', GameController::class);
 Route::resource('/character', CharacterController::class);
+Route::resource('/player-class', PlayerClassController::class);

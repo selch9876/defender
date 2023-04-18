@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Character;
+use App\Models\PlayerClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,7 +37,8 @@ class CharacterController extends Controller
      */
     public function create()
     {
-        return view('characters.create');
+        $playerClasses = PlayerClass::all();
+        return view('characters.create', compact('playerClasses'));
     }
 
     /**
@@ -50,15 +52,16 @@ class CharacterController extends Controller
         $user = Auth::user();
         $character = new Character([
             'name' => $request->input('name'),
-            'class' => $request->input('class'),
+            'class_id' => $request->input('class_id'),
+            'str' => $request->input('str'),
+            'dex' => $request->input('dex'),
+            'int' => $request->input('int'),
             'xp' => 0,
             'level' => 1,
-            'hp' => 100,
-            'mp' => 50,
-            'str' => 10,
-            'dex' => 10,
-            'int' => 10,
         ]);
+
+        $character->hp = $character->playerClass->base_health;
+        $character->mp = $character->int * 10;
 
         $user->characters()->save($character);
         return redirect()->route('character.show', $character->id);
@@ -88,8 +91,10 @@ class CharacterController extends Controller
     {
        
         $character = Character::findOrFail($id);
+        $playerClasses = PlayerClass::all();
         return view('characters.edit', [
             'character' => $character,
+            'playerClasses' => $playerClasses,
         ]);
     }
 
@@ -105,13 +110,18 @@ class CharacterController extends Controller
         $character = Character::findOrFail($id);
 
         $validated['name'] = $request->get('name');
-        $validated['class'] = $request->get('class');
+        $validated['class_id'] = $request->get('class_id');
+        $validated['str'] = $request->get('str');
+        $validated['dex'] = $request->get('dex');
+        $validated['int'] = $request->get('int');
         $character ->fill($validated);
        
+        $character->hp = $character->playerClass->base_health;
+        $character->mp = $character->int * 10;
         
         $character->save();
         $request->session()->flash('status', 'Character Updated');
-        return redirect()->route('character.edit', ['character' => $character->id]);
+        return redirect()->route('character.index');
     }
 
     /**
