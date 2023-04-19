@@ -12,13 +12,15 @@ class Enemy extends Model
     protected $name;
     protected $health;
     protected $damage;
+    protected $defence;
     protected $experience;
 
-    public function __construct($name, $health, $damage, $experience)
+    public function __construct($name, $health, $damage, $defence, $experience)
     {
         $this->name = $name;
         $this->health = $health;
         $this->damage = $damage;
+        $this->defence = $defence;
         $this->experience = $experience;
     }
 
@@ -30,6 +32,11 @@ class Enemy extends Model
     public function getHealth()
     {
         return $this->health;
+    }
+
+    public function getDefence()
+    {
+        return $this->defence;
     }
 
     public function getDamage()

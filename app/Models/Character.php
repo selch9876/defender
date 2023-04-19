@@ -21,6 +21,8 @@ class Character extends Model
         'class_id',
     ];
 
+    
+    
     // Relationships
     public function user()
     {
@@ -38,19 +40,31 @@ class Character extends Model
     }
 
     // Methods
-    public function attack(Character $target)
+    public function getDefence()
     {
-        // Implementation of the attack method
+        return round($this->dex / 3);
     }
-
-    public function defend()
+    public function getAttack()
     {
-        // Implementation of the defend method
+        return $this->playerClass->base_attack * 10;
     }
 
     public function castSpell(Character $target)
     {
         // Implementation of the castSpell method
+    }
+
+    public function giveDamage(int $damage)
+    {
+        // Reduce the character's HP by the amount of damage.
+        $this->hp -= $damage;
+        $this->save();
+
+        // If the character's HP is now zero or negative, mark them as dead.
+        if ($this->hp <= 0) {
+            $this->is_dead = true;
+            $this->save();
+        }
     }
 
     public function levelUp()

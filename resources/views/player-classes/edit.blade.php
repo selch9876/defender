@@ -69,7 +69,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="base_attack" class="col-md-4 col-form-label text-md-right">{{ __('Base Resistance') }}</label>
+                                <label for="base_attack" class="col-md-4 col-form-label text-md-right">{{ __('Base Attack') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="base_attack" type="number" min="0" max="5" class="form-control @error('base_attack') is-invalid @enderror" name="base_attack" value="{{ old('base_attack', optional($playerClass ?? null)->base_attack) }}" required autocomplete="base_attack" autofocus>

@@ -43,33 +43,46 @@
                           Dropdown
                         </a>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Action</a></li>
-                          <li><a class="dropdown-item" href="#">Another action</a></li>
-                          <li><hr class="dropdown-divider"></li>
-                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                          @if (Route::has('login'))
+                            <li>
+                                @auth
+                                <form method="POST" action="{{ route('logout') }}">
+                                  @csrf
+            
+                                    <x-dropdown-link :href="route('logout')"
+                                            onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                              </li>
+                              <li><a class="dropdown-item" href="{{ url('/character') }}" class="text-sm">Characters</a></li>
+                              <li><a class="dropdown-item" href="{{ url('/player-class') }}" class="text-sm">Classes</a></li>
+                            @else
+                              <a href="{{ route('login') }}" class="text-sm">Log in</a>
+      
+                              @if (Route::has('register'))
+                                  <a href="{{ route('register') }}" class="ml-4 text-sm">Register</a>
+                              @endif
+                                @endauth
+                              </li>
+                            @endif
+                              
                         </ul>
                       </li>
                       <li class="nav-item">
-                        @if (Route::has('login'))
-                            <div class="hidden fixed top-0.5 right-150 px-6 py-3 sm:block">
-                                @auth
-                                    <a href="{{ url('/character') }}" class="text-sm">Characters</a>
-                                    <a href="{{ url('/player-class') }}" class="text-sm">Classes</a>
-                                @else
-                                    <a href="{{ route('login') }}" class="text-sm">Log in</a>
-            
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="ml-4 text-sm">Register</a>
-                                    @endif
-                                @endauth
-                            </div>
-                        @endif
+                        
+                                
+                          
+                        
                       </li>
                     </ul>
                     <form class="d-flex" role="search">
                       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                       <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
+
+                    
                   </div>
                 </div>
               </nav>

@@ -9,9 +9,27 @@
         </div>
         <div class="row">
             <div class="col">
-                <a href="{{ route('game.create') }}">New Game</a>
+                <form method="POST" action="{{ route('game.create') }}">
+                @csrf
+                <ul class="bg-dark text-white">
+                    <p>Please choose a character:</p>
+                    @foreach ($characters as $character)
+                        <li>
+                            <input type="radio" name="character" value="{{ $character->id }}" id="{{ $character->id }}">
+                            <strong>{{ $character->name }}</strong> 
+                            <br>
+                            Health: {{ $character->hp }}
+                            <br>
+                            Experience: {{ $character->xp }}
+                        </li>
+                    @endforeach
+                </ul>
+                <button type="submit">Start Game</button>
+                </form>
             </div>
+            
         </div>
+  
     </div>
 </div>
 
