@@ -6,34 +6,47 @@ use App\Models\Enemy;
 use App\Models\Fight;
 use App\Models\Round;
 use App\Models\Character;
+use App\Models\Monster;
 use Illuminate\Http\Request;
 
 class FightController extends Controller
 {
-    public function start(Character $character, Enemy $enemy)
+    public function fight()
     {
-        // Create a new fight record
-        $fight = Fight::create([
-            'character_id' => $character->id,
-            'enemy_id' => $enemy->id,
-            'status' => Fight::STATUS_IN_PROGRESS,
-        ]);
-
-        // Initialize the first round
-        $round = Round::create([
-            'fight_id' => $fight->id,
-            'attacker_type' => Round::TYPE_CHARACTER,
-            'attacker_id' => $character->id,
-            'defender_type' => Round::TYPE_ENEMY,
-            'defender_id' => $enemy->id,
-        ]);
-
-        // Pass the required data to the view
-        return view('game.attack', [
+        $fight = Fight::find(request()->get('id'));
+        $character = Character::find($fight->character_id);
+        $enemy = Monster::find($fight->monster_id);
+        return view('game.fight', [
             'fight' => $fight,
-            'round' => $round,
             'character' => $character,
             'enemy' => $enemy,
         ]);
+    }
+    public function attack(Request $request)
+    {
+        $fight = Fight::findOrFail($request->input('fight_id'));
+        $character = $fight->character;
+        $monster = $fight->monster;
+        $attacker = $request->input('attacker_type') == 'character' ? $character : $monster;
+        $defender = $request->input('attacker_type') == 'character' ? $monster : $character;
+        $damage = $attacker->attack($defender);
+        $defender->takeDamage($damage);
+        if ($defender->isDead()) {
+            $fight->winner()->associate($attacker);
+            $fight->save();
+            return redirect()->route('win', ['id' => $fight->id]);
+        }
+        $round = $fight->getCurrentRound();
+        if (!$round->isInProgress()) {
+            $nextRoundNumber = $fight->getNextRound();
+            $round = new Round();
+            $round->number = $nextRoundNumber;
+            $round->fight()->associate($fight);
+            $round->save();
+            $fight->current_round = $round->id;
+            $fight->save();
+        }
+        $round->addTurn($attacker, $defender, $damage);
+        return redirect()->route('fight', ['id' => $fight->id]);
     }
 }

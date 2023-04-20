@@ -15,20 +15,17 @@ class CreateRoundsTable extends Migration
     {
         Schema::create('rounds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fight_id')->constrained()->onDelete('cascade');
-            $table->integer('number');
-            $table->string('description');
-            $table->integer('damage');
-            $table->string('result')->nullable();
+            $table->unsignedBigInteger('fight_id');
+            $table->foreign('fight_id')->references('id')->on('fights')->onDelete('cascade');
+            $table->unsignedBigInteger('attacker_id');
+            $table->enum('attacker_type', ['player', 'monster']);
+            $table->unsignedBigInteger('defender_id');
+            $table->enum('defender_type', ['player', 'monster']);
+            $table->integer('turn')->default(0);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('rounds');

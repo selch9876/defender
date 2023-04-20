@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('home');
 });
 
+/* Route::get('/fight', function () {
+    return view('game.fight')->name('fight');
+}); */
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -33,4 +37,7 @@ Route::resource('/player-class', PlayerClassController::class);
 
 // Game Routes
 Route::post('/game/create', [GameController::class, 'create'] );
-Route::post('/fight', [FightController::class, 'start'] )->name('fight');
+Route::get('/fight', [FightController::class, 'fight'] )->name('fight');
+Route::post('/attack', [FightController::class, 'attack'] )->name('fight.attack');
+Route::post('/start-game', [GameController::class, 'startGame'])->name('start-game');
+

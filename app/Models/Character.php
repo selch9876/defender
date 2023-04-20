@@ -34,9 +34,14 @@ class Character extends Model
         return $this->belongsTo(PlayerClass::class, 'class_id');
     }
 
-    public function battleLogs()
+    public function fights()
     {
-        return $this->hasMany(BattleLog::class);
+        return $this->hasMany(Fight::class);
+    }
+
+    public function rounds()
+    {
+        return $this->hasMany(Round::class, 'attacker_id');
     }
 
     // Methods
@@ -54,18 +59,7 @@ class Character extends Model
         // Implementation of the castSpell method
     }
 
-    public function giveDamage(int $damage)
-    {
-        // Reduce the character's HP by the amount of damage.
-        $this->hp -= $damage;
-        $this->save();
-
-        // If the character's HP is now zero or negative, mark them as dead.
-        if ($this->hp <= 0) {
-            $this->is_dead = true;
-            $this->save();
-        }
-    }
+    
 
     public function levelUp()
     {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEnemiesTable extends Migration
+class CreateMonstersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateEnemiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('enemies', function (Blueprint $table) {
+        Schema::create('monsters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->integer('level')->default(1);
+            $table->integer('health')->default(10);
+            $table->integer('damage')->default(2);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateEnemiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enemies');
+        Schema::dropIfExists('monsters');
     }
 }

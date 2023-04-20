@@ -15,8 +15,9 @@ class CreateFightsTable extends Migration
     {
         Schema::create('fights', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('enemy_id')->constrained()->onDelete('cascade');
+            $table->foreignId('character_id')->constrained()->onDelete('cascade');
+            $table->foreignId('monster_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('current_round')->nullable();
             $table->enum('status', ['in_progress', 'completed'])->default('in_progress');
             $table->timestamps();
         });

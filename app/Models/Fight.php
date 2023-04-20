@@ -10,8 +10,9 @@ class Fight extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'enemy_id',
+        'character_id',
+        'monster_id',
+        'current_round',
         'status',
     ];
 
@@ -30,22 +31,16 @@ class Fight extends Model
         return $this->hasMany(Round::class);
     }
 
-    public function attack($attacker, $defender)
+    public function getNextRound()
     {
-        // Calculate damage and apply it to the defender
-        $damage = $attacker->getDamage();
-        $defender->takeDamage($damage);
-
-        // Check if the defender is still alive
-        if ($defender->isAlive()) {
-            // Switch the attacker and defender and start the next round
-            $this->nextRound($defender, $attacker);
-        } else {
-            // The defender is defeated, end the fight
-            $this->status = 'completed';
-            $this->save();
-        }
+        return $this->rounds()->max('number') + 1;
     }
+
+    public function getCurrentRound()
+    {
+        return $this->rounds()->findOrFail($this->current_round);
+    }
+
 
     
 }

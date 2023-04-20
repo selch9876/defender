@@ -9,13 +9,13 @@
         </div>
         <div class="row">
             <div class="col">
-                <form method="POST" action="{{ route('game.create') }}">
+                <form method="POST" action="{{ route('start-game') }}">
                 @csrf
                 <ul class="bg-dark text-white">
                     <p>Please choose a character:</p>
                     @foreach ($characters as $character)
                         <li>
-                            <input type="radio" name="character" value="{{ $character->id }}" id="{{ $character->id }}">
+                            <input type="radio" name="character_id" value="{{ $character->id }}" id="{{ $character }}">
                             <strong>{{ $character->name }}</strong> 
                             <br>
                             Health: {{ $character->hp }}
