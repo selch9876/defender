@@ -31,9 +31,10 @@ class FightController extends Controller
         $attacker = $request->input('attacker_type') == 'player' ? $character : $monster;
         
         $damage = $attacker->attack();
-        dd($damage);
+        //dd($damage);
         $defender->takeDamage($damage);
         if ($defender->isDead()) {
+            $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
         $round = $fight->getCurrentRound();
@@ -47,6 +48,7 @@ class FightController extends Controller
             $fight->save();
         }
         $round->addTurn($attacker, $defender, $damage);
+        $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage!');
         return redirect()->route('fight', ['id' => $fight->id]);
     }
 

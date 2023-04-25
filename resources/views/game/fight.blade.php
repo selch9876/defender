@@ -9,6 +9,12 @@
         <p>Enemy: {{ $enemy->name }}</p>
         <p>Enemy health: {{ $enemy->health }}</p>
 
+        @if (session('status'))
+            <div class="alert alert-success mt-5">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <form method="post" action="{{ route('fight.attack') }}">
             @csrf
             <input type="hidden" name="fight_id" value="{{ $fight->id }}">

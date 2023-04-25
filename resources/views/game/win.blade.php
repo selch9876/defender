@@ -11,6 +11,11 @@
                         <p>{{ __('Winner:') }} {{ $winner->name }}</p>
                         <p>{{ __('Loser:') }} {{ $loser->name }}</p>
                         <a href="{{ route('home') }}" class="btn btn-primary">{{ __('Return to Home') }}</a>
+                        @if (session('status'))
+                            <div class="alert alert-success mt-5">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
