@@ -15,7 +15,7 @@
                     <p>Please choose a character:</p>
                     @foreach ($characters as $character)
                         <li>
-                            <input type="radio" name="character_id" value="{{ $character->id }}" id="{{ $character }}">
+                            <input type="radio" name="character_id" value="{{ $character->id }}" id="{{ $character->id }}">
                             <strong>{{ $character->name }}</strong> 
                             <br>
                             Health: {{ $character->hp }}

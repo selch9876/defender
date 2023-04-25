@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 /* Route::get('/fight', function () {
     return view('game.fight')->name('fight');
@@ -36,8 +36,8 @@ Route::resource('/character', CharacterController::class);
 Route::resource('/player-class', PlayerClassController::class);
 
 // Game Routes
-Route::post('/game/create', [GameController::class, 'create'] );
 Route::get('/fight', [FightController::class, 'fight'] )->name('fight');
 Route::post('/attack', [FightController::class, 'attack'] )->name('fight.attack');
 Route::post('/start-game', [GameController::class, 'startGame'])->name('start-game');
+Route::get('/win/{id}', [FightController::class, 'win'])->name('win');
 

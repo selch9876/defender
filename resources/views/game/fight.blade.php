@@ -13,7 +13,7 @@
             @csrf
             <input type="hidden" name="fight_id" value="{{ $fight->id }}">
             <input type="radio" name="attacker_type" value="player" checked> Attack<br>
-            <input type="radio" name="attacker_type" value="enemy"> Defend<br>
+            <input type="radio" name="attacker_type" value="monster"> Defend<br>
             <button type="submit">Next Round</button>
         </form>
     </div>

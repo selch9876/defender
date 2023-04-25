@@ -36,13 +36,30 @@ class Round extends Model
         $this->save();
     }
 
-    public function addTurn(Character $attacker, Character $defender, $damage)
+    public function addTurn( $attacker,  $defender, $damage)
     {
-        $this->turns()->create([
-            'attacker_id' => $attacker->id,
-            'defender_id' => $defender->id,
-            'damage' => $damage
-        ]);
+        $this->attacker_id = $attacker->id;
+        $this->defender_id = $defender->id;
+        $this->save();
+    }
+
+    public function getAttacker()
+    {
+        return Character::find($this->attacker_id);
+    }
+
+    public function getDefender()
+    {
+        return Monster::find($this->defender_id);
+    }
+
+    public function isInProgress()
+    {
+        // Get the current round number for the fight
+        $currentRoundNumber = $this->fight->getCurrentRound();
+
+        // If this round number is the same as the current round number, the round is in progress
+        return $currentRoundNumber;
     }
 }
 

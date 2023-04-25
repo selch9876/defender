@@ -27,13 +27,13 @@ class FightController extends Controller
         $fight = Fight::findOrFail($request->input('fight_id'));
         $character = $fight->character;
         $monster = $fight->monster;
-        $attacker = $request->input('attacker_type') == 'character' ? $character : $monster;
-        $defender = $request->input('attacker_type') == 'character' ? $monster : $character;
-        $damage = $attacker->attack($defender);
+        $defender = $request->input('attacker_type') == 'monster' ? $character : $monster;
+        $attacker = $request->input('attacker_type') == 'player' ? $character : $monster;
+        
+        $damage = $attacker->attack();
+        dd($damage);
         $defender->takeDamage($damage);
         if ($defender->isDead()) {
-            $fight->winner()->associate($attacker);
-            $fight->save();
             return redirect()->route('win', ['id' => $fight->id]);
         }
         $round = $fight->getCurrentRound();
@@ -41,12 +41,23 @@ class FightController extends Controller
             $nextRoundNumber = $fight->getNextRound();
             $round = new Round();
             $round->number = $nextRoundNumber;
-            $round->fight()->associate($fight);
+            $round->fight()->save($fight);
             $round->save();
             $fight->current_round = $round->id;
             $fight->save();
         }
         $round->addTurn($attacker, $defender, $damage);
         return redirect()->route('fight', ['id' => $fight->id]);
+    }
+
+    public function win($id)
+    {
+        $fight = Fight::findOrFail($id);
+        $winner = $fight->winner();
+        $loser = $fight->loser();
+        return view('game.win', [
+            'winner' => $winner,
+            'loser' => $loser,
+        ]);
     }
 }

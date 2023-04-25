@@ -36,7 +36,7 @@ class GameController extends Controller
         // Generate a random monster
         $monster = $this->generateEnemy();
 
-        //dd($character->id);
+        //dd($character);
 
         // Create a new fight between the character and monster
         $fight = new Fight();

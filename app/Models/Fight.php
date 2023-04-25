@@ -16,14 +16,14 @@ class Fight extends Model
         'status',
     ];
 
-    public function user()
+    public function monster()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Monster::class);
     }
 
-    public function enemy()
+    public function character()
     {
-        return $this->belongsTo(Enemy::class);
+        return $this->belongsTo(Character::class, 'character_id');
     }
 
     public function rounds()
@@ -39,6 +39,46 @@ class Fight extends Model
     public function getCurrentRound()
     {
         return $this->rounds()->findOrFail($this->current_round);
+    }
+
+    public function winner()
+    {
+        $monsterHealth = $this->monster->health;
+        $charactersHealth = $this->character->sum('hp');
+
+        if ($monsterHealth > 0 && $charactersHealth > 0) {
+            // The fight is still ongoing, so return null
+            return null;
+        } elseif ($monsterHealth <= 0 && $charactersHealth <= 0) {
+            // All characters and the monster are dead, so return null
+            return null;
+        } elseif ($monsterHealth <= 0) {
+            // The monster is dead, so return the characters as the winner
+            return $this->character;
+        } else {
+            // All characters are dead, so return the monster as the winner
+            return $this->monster;
+        }
+    }
+
+    public function loser()
+    {
+        $monsterHealth = $this->monster->health;
+        $charactersHealth = $this->character->sum('hp');
+
+        if ($monsterHealth > 0 && $charactersHealth > 0) {
+            // The fight is still ongoing, so return null
+            return null;
+        } elseif ($monsterHealth <= 0 && $charactersHealth <= 0) {
+            // All characters and the monster are dead, so return null
+            return null;
+        } elseif ($monsterHealth <= 0) {
+            // The monster is dead, so return the characters as the winner
+            return $this->monster;
+        } else {
+            // All characters are dead, so return the monster as the winner
+            return $this->character;
+        }
     }
 
 

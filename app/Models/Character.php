@@ -49,17 +49,37 @@ class Character extends Model
     {
         return round($this->dex / 3);
     }
-    public function getAttack()
-    {
-        return $this->playerClass->base_attack * 10;
-    }
 
     public function castSpell(Character $target)
     {
         // Implementation of the castSpell method
     }
 
-    
+    /**
+     * Inflict damage on the character.
+     *
+     * @param int $damage
+     * @return void
+     */
+    public function takeDamage(int $damage)
+    {
+        $this->hp -= $damage;
+        if ($this->hp < 0) {
+            $this->hp = 0;
+        }
+        $this->save();
+    }
+
+    public function attack()
+    {
+        $attackPower = $this->playerClass->base_attack * rand(10, 100);
+        return $attackPower;
+    }
+
+    public function isDead()
+    {
+        return $this->hp <= 0;
+    }
 
     public function levelUp()
     {
