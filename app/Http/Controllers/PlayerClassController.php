@@ -122,8 +122,14 @@ class PlayerClassController extends Controller
      * @param  \App\Models\PlayerClass  $playerClass
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PlayerClass $playerClass)
+    public function destroy(Request $request, $id)
     {
-        //
+        $playerClass = PlayerClass::findOrFail($id);
+
+        $playerClass->delete();
+
+        $request->session()->flash('status', 'Class was deleted!');
+
+        return redirect()->route('player-class.index');
     }
 }

@@ -18,9 +18,47 @@
         <form method="post" action="{{ route('fight.attack') }}">
             @csrf
             <input type="hidden" name="fight_id" value="{{ $fight->id }}">
-            <input type="radio" name="attacker_type" value="player" checked> Attack<br>
-            <input type="radio" name="attacker_type" value="monster"> Defend<br>
-            <button type="submit">Next Round</button>
+            <input type="hidden" name="character_id" value="{{ $character->id }}">
+            <button type="submit">Attack</button>
         </form>
+
+        <form method="post" action="{{ route('fight.defend') }}">
+            @csrf
+            <input type="hidden" name="fight_id" value="{{ $fight->id }}">
+            <input type="hidden" name="character_id" value="{{ $character->id }}">
+            <button type="submit">Defend</button>
+        </form>
+
+        <form method="post" action="{{ route('fight.heal') }}">
+            @csrf
+            <input type="hidden" name="fight_id" value="{{ $fight->id }}">
+            <input type="hidden" name="character_id" value="{{ $character->id }}">
+            <button type="submit">Heal</button>
+        </form>
+
+        <form method="post" action="{{ route('fight.run') }}">
+            @csrf
+            <input type="hidden" name="fight_id" value="{{ $fight->id }}">
+            <input type="hidden" name="character_id" value="{{ $character->id }}">
+            <button type="submit">Run</button>
+        </form>
+
+        @if ($character->mageSpells)
+            @forelse ($character->mageSpells as $spell)
+                <form method="post" action="{{ route('fight.cast') }}">
+                    Cast {{ $spell->name }}
+                    @csrf
+                    <input type="hidden" name="fight_id" value="{{ $fight->id }}">
+                    <input type="hidden" name="character_id" value="{{ $character->id }}">
+                    <input type="hidden" name="character_id" value="{{ $spell->id }}">
+                    <button type="submit">Cast</button>
+                </form>
+            @empty
+                
+            @endforelse
+            
+        @else
+            
+        @endif
     </div>
 @endsection

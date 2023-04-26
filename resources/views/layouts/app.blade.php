@@ -58,6 +58,7 @@
                               </li>
                               <li><a class="dropdown-item" href="{{ url('/character') }}" class="text-sm">Characters</a></li>
                               <li><a class="dropdown-item" href="{{ url('/player-class') }}" class="text-sm">Classes</a></li>
+                              <li><a class="dropdown-item" href="{{ url('/mage-spell') }}" class="text-sm">Mage Spells</a></li>
                             @else
                               <a href="{{ route('login') }}" class="text-sm">Log in</a>
       

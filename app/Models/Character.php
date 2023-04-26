@@ -39,6 +39,11 @@ class Character extends Model
         return $this->hasMany(Fight::class);
     }
 
+    public function mageSpells()
+    {
+        return $this->hasMany(MageSpell::class);
+    }
+
     public function rounds()
     {
         return $this->hasMany(Round::class, 'attacker_id');
@@ -50,9 +55,11 @@ class Character extends Model
         return round($this->dex / 3);
     }
 
-    public function castSpell(Character $target)
+    public function castSpell(Character $mageSpell)
     {
         // Implementation of the castSpell method
+        $spellPower = $mageSpell->damage * $this->level;
+        return $spellPower;
     }
 
     /**
@@ -70,9 +77,17 @@ class Character extends Model
         $this->save();
     }
 
+    public function heal($heal)
+    {
+        $this->hp += $heal;
+        
+        $this->save();
+        return $heal;
+    }
+
     public function attack()
     {
-        $attackPower = $this->playerClass->base_attack * rand(10, 100);
+        $attackPower = $this->playerClass->base_attack * rand(10, 20);
         return $attackPower;
     }
 
