@@ -48,13 +48,12 @@
 
         @if ($character->mageSpells)
             @forelse ($character->mageSpells as $spell)
-                <form method="post" action="{{ route('fight.cast') }}">
-                    Cast {{ $spell->name }}
+                <form method="post" action="{{ route('fight.cast') }}"> 
                     @csrf
                     <input type="hidden" name="fight_id" value="{{ $fight->id }}">
                     <input type="hidden" name="character_id" value="{{ $character->id }}">
                     <input type="hidden" name="mage_spell_id" value="{{ $spell->id }}">
-                    <button type="submit">Cast</button>
+                    <button type="submit">Cast</button> {{ $spell->name }}
                 </form>
             @empty
                 

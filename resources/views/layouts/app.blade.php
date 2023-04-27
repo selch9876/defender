@@ -92,6 +92,13 @@
         </div>
 
         <div class="main">
+          <div class="container mt-4 mb-4">
+            <div class="row justify-content-center">
+                <div class="col text-center">
+                    <img src="{{ asset('storage/images/adnd_logo.png') }}" alt="" class="img-fluid">
+                </div>
+            </div>
+          </div>
             @yield('content')
         </div>
 

@@ -23,6 +23,7 @@ class FightController extends Controller
             'enemy' => $enemy,
         ]);
     }
+    
     public function attack(Request $request)
     {
         $fight = Fight::findOrFail($request->input('fight_id'));
