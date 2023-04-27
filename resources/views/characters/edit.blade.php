@@ -86,6 +86,15 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="mage_spell_id[]" class="col-md-4 col-form-label text-md-right">{{ __('Mage Spells') }}</label>
+                                <div class="col-md-6">
+                                    @foreach($mageSpells as $mageSpell)
+                                    <label><input type="checkbox" name="mage_spell_id[]" class=""  value="{{ $mageSpell->id }}" {{ in_array($mageSpell->id, $characterMageSpells) ? 'checked' : ''}}> {{ $mageSpell->name }} </label>
+                                    @endforeach
+                                </div>
+                            </div>
+
                             <!-- Additional character details -->
 
                             <div class="form-group row mb-0">

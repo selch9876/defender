@@ -18,6 +18,6 @@ class MageSpell extends Model
 
     public function character()
     {
-        return $this->belongsTo(Character::class);
+        return $this->belongsToMany(Character::class)->withTimestamps();
     }
 }

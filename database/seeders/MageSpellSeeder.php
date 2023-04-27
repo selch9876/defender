@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MageSpell;
 use Illuminate\Database\Seeder;
 
 class MageSpellSeeder extends Seeder
@@ -13,6 +14,8 @@ class MageSpellSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $mageSpell = MageSpell::factory()
+        ->magicMissile()
+        ->create();
     }
 }

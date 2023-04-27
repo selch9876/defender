@@ -18,7 +18,7 @@ class PlayerClassFactory extends Factory
         ];
     }
 
-    public function Warrior()
+    public function warrior()
     {
         return $this->state(function (array $attributes) {
             return [
@@ -33,7 +33,7 @@ class PlayerClassFactory extends Factory
         });
     }
 
-    public function Wizard()
+    public function wizard()
     {
         return $this->state(function (array $attributes) {
             return [
@@ -48,7 +48,7 @@ class PlayerClassFactory extends Factory
         });
     }
 
-    public function Priest()
+    public function priest()
     {
         return $this->state(function (array $attributes) {
             return [
@@ -63,7 +63,7 @@ class PlayerClassFactory extends Factory
         });
     }
     
-    public function Rogue()
+    public function rogue()
     {
         return $this->state(function (array $attributes) {
             return [

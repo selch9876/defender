@@ -41,7 +41,7 @@ class Character extends Model
 
     public function mageSpells()
     {
-        return $this->hasMany(MageSpell::class);
+        return $this->belongsToMany(MageSpell::class)->withTimestamps();
     }
 
     public function rounds()
@@ -55,10 +55,16 @@ class Character extends Model
         return round($this->dex / 3);
     }
 
-    public function castSpell(Character $mageSpell)
+    public function castSpell($mageSpell)
     {
         // Implementation of the castSpell method
         $spellPower = $mageSpell->damage * $this->level;
+        $this->mp -= $mageSpell->mc;
+        if ($this->mp < 0) {
+            $this->mp = 0;
+        }
+        $this->save();
+        //dd($mageSpell->mc);
         return $spellPower;
     }
 

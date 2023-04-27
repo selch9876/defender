@@ -19,8 +19,6 @@ class CreateMageSpellsTable extends Migration
             $table->unsignedBigInteger("level");
             $table->unsignedBigInteger("mc");
             $table->unsignedBigInteger("damage");
-            $table->unsignedBigInteger('character_id')->unsigned()->nullable();
-            $table->foreign('character_id')->references('id')->on('characters')->onDelete('cascade');
             $table->timestamps();
         });
     }

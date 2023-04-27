@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Character;
+use App\Models\MageSpell;
 use App\Models\PlayerClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,11 @@ class CharacterController extends Controller
     public function create()
     {
         $playerClasses = PlayerClass::all();
-        return view('characters.create', compact('playerClasses'));
+        $mageSpells = MageSpell::all();
+        return view('characters.create', [
+            'playerClasses' => $playerClasses,
+            'mageSpells' => $mageSpells,
+        ]);
     }
 
     /**
@@ -62,8 +67,11 @@ class CharacterController extends Controller
 
         $character->hp = $character->playerClass->base_health;
         $character->mp = $character->int * 10;
-
         $user->characters()->save($character);
+        $character->save();
+        $character->mageSpells()->attach($request->mage_spell_id);
+
+        
         return redirect()->route('character.show', $character->id);
     }
 
@@ -76,8 +84,10 @@ class CharacterController extends Controller
     public function show($id)
     {
         $character = Character::findOrFail($id);
+        $mageSpells = MageSpell::all();
         return view('characters.show', [
             'character' => $character,
+            'mageSpells' => $mageSpells,
         ]); 
     }
 
@@ -92,9 +102,13 @@ class CharacterController extends Controller
        
         $character = Character::findOrFail($id);
         $playerClasses = PlayerClass::all();
+        $mageSpells = MageSpell::all();
+        $characterMageSpells = $character->mageSpells->pluck('id')->toArray();
         return view('characters.edit', [
             'character' => $character,
             'playerClasses' => $playerClasses,
+            'characterMageSpells' => $characterMageSpells,
+            'mageSpells' => $mageSpells,
         ]);
     }
 
@@ -118,7 +132,7 @@ class CharacterController extends Controller
        
         $character->hp = $character->playerClass->base_health;
         $character->mp = $character->int * 10;
-        
+        $character->mageSpells()->sync($request->mage_spell_id);
         $character->save();
         $request->session()->flash('status', 'Character Updated');
         return redirect()->route('character.index');

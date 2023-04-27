@@ -17,4 +17,16 @@ class MageSpellFactory extends Factory
             //
         ];
     }
+
+    public function magicMissile()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'name' => 'Magic Missile',
+                'level' => 1,
+                'mc' => 5,
+                'damage' => 1,
+            ];
+        });
+    }
 }

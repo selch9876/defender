@@ -43,6 +43,7 @@ Route::post('/attack', [FightController::class, 'attack'] )->name('fight.attack'
 Route::post('/defend', [FightController::class, 'defend'] )->name('fight.defend');
 Route::post('/heal', [FightController::class, 'heal'] )->name('fight.heal');
 Route::post('/run', [FightController::class, 'run'] )->name('fight.run');
+Route::post('/cast', [FightController::class, 'cast'] )->name('fight.cast');
 Route::post('/start-game', [GameController::class, 'startGame'])->name('start-game');
 Route::get('/win/{id}', [FightController::class, 'win'])->name('win');
 

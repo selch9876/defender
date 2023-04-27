@@ -79,7 +79,16 @@
                                 <input id="class" type="text" class="form-control" name="class" value="{{ $character->int  }}" disabled>
                             </div>
                         </div>
-
+                        <div class="form-group row">
+                            <label for="mage_spells" class="col-md-4 col-form-label text-md-right">{{ __('Mage Spells') }}</label>
+                            <div class="col-md-6">
+                                @forelse ($mageSpells as $mageSpell)
+                                <input id="mage_spells" type="text" class="form-control" name="mage_spells" value="{{ $mageSpell->name }}" disabled>
+                                @empty
+                                    No Spells!
+                                @endforelse
+                            </div>
+                        </div>
                         
 
                         <!-- Additional character details -->

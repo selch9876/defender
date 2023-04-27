@@ -6,8 +6,11 @@
         <p>Current round: {{ $fight->current_round }}</p>
         <p>Player: {{ $character->name }}</p>
         <p>Player health: {{ $character->hp }}</p>
+        <p>Player Spell Power: {{ $character->mp }}</p>
+        <br>
         <p>Enemy: {{ $enemy->name }}</p>
         <p>Enemy health: {{ $enemy->health }}</p>
+        <br>
 
         @if (session('status'))
             <div class="alert alert-success mt-5">
@@ -50,7 +53,7 @@
                     @csrf
                     <input type="hidden" name="fight_id" value="{{ $fight->id }}">
                     <input type="hidden" name="character_id" value="{{ $character->id }}">
-                    <input type="hidden" name="character_id" value="{{ $spell->id }}">
+                    <input type="hidden" name="mage_spell_id" value="{{ $spell->id }}">
                     <button type="submit">Cast</button>
                 </form>
             @empty

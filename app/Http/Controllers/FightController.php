@@ -6,6 +6,7 @@ use App\Models\Enemy;
 use App\Models\Fight;
 use App\Models\Round;
 use App\Models\Character;
+use App\Models\MageSpell;
 use App\Models\Monster;
 use Illuminate\Http\Request;
 
@@ -169,6 +170,42 @@ class FightController extends Controller
         $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. 
         ' for ' . $damage . ' damage! ' . $defender->name . ' runs from the battle!');
         return redirect()->route('home');
+    }
+
+    public function cast(Request $request)
+    {
+        $fight = Fight::findOrFail($request->input('fight_id'));
+        $character = $fight->character;
+        $monster = $fight->monster;
+        $attacker = $character;
+        $defender = $monster;
+        $mageSpell = MageSpell::findOrFail($request->input('mage_spell_id'));
+        if ($attacker->mp >= $mageSpell->mc) {
+            $damage = $attacker->castSpell($mageSpell);
+            $defender->takeDamage($damage);
+        } else {
+            $request->session()->flash('status', "You don't have enough spell power!" );
+            return redirect()->route('fight', ['id' => $fight->id]);
+        }
+        
+        if ($defender->isDead()) {
+            $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
+            return redirect()->route('win', ['id' => $fight->id]);
+        }
+       
+        $round = $fight->getCurrentRound();
+        if (!$round->isInProgress()) {
+            $nextRoundNumber = $fight->getNextRound();
+            $round = new Round();
+            $round->number = $nextRoundNumber;
+            $round->fight()->save($fight);
+            $round->save();
+            $fight->current_round = $round->id;
+            $fight->save();
+        }
+        $round->addTurn($attacker, $defender, $damage);
+        $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage! ');
+        return redirect()->route('fight', ['id' => $fight->id]);
     }
 
     public function win($id)

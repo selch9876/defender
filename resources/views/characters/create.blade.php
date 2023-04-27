@@ -86,6 +86,15 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="mage_spell_id[]" class="col-md-4 col-form-label text-md-right">{{ __('Mage Spells') }}</label>
+                                <div class="col-md-6">
+                                    @foreach($mageSpells as $mageSpell)
+                                    <label><input type="checkbox" name="mage_spell_id[]" class=""  value="{{ $mageSpell->id }}"> {{ $mageSpell->name }} </label>
+                                    @endforeach
+                                </div>
+                            </div>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
