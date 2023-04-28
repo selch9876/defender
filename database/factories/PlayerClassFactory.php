@@ -41,7 +41,7 @@ class PlayerClassFactory extends Factory
                 'description' => 'Inteligent mage with the knowlage of the arcane arts',
                 'base_health' => '50',
                 'base_resistance' => '2',
-                'base_attack' => '0',
+                'base_attack' => '1',
                 'base_defence' => '0',
                 'special_ability' => 'Detect Magic',
             ];

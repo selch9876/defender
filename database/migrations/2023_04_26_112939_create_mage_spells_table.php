@@ -18,7 +18,7 @@ class CreateMageSpellsTable extends Migration
             $table->string("name");
             $table->unsignedBigInteger("level");
             $table->unsignedBigInteger("mc");
-            $table->unsignedBigInteger("damage");
+            $table->string('dice')->nullable();
             $table->timestamps();
         });
     }

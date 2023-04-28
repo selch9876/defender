@@ -13,7 +13,8 @@ class Monster extends Model
         'name',
         'level',
         'health',
-        'damage'
+        'damage',
+        'xp',
     ];
 
     public function fights()

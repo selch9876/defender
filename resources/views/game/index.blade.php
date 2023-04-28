@@ -15,12 +15,15 @@
                     <p>Please choose a character:</p>
                     @foreach ($characters as $character)
                         <li>
-                            <input type="radio" name="character_id" value="{{ $character->id }}" id="{{ $character->id }}">
-                            <strong>{{ $character->name }}</strong> 
+                            <input type="radio" name="character_id" value="{{ $character->id }}" id="{{ $character->id }}" required>
+                            <strong>{{ $character->name }}</strong> (Level {{ $character->level }}  {{ $character->playerClass->name }})
                             <br>
                             Health: {{ $character->hp }}
                             <br>
+                            Mana Power: {{ $character->mp }}
+                            <br>
                             Experience: {{ $character->xp }}
+                            
                         </li>
                     @endforeach
                 </ul>

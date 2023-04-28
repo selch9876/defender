@@ -5,8 +5,10 @@
         <h1>Fight</h1>
         <p>Current round: {{ $fight->current_round }}</p>
         <p>Player: {{ $character->name }}</p>
+        <p>Player Level: {{ $character->level }}</p>
         <p>Player health: {{ $character->hp }}</p>
         <p>Player Spell Power: {{ $character->mp }}</p>
+        <p>Player Weapon: {{ $character->getEquippedWeapon()->name }}</p>
         <br>
         <p>Enemy: {{ $enemy->name }}</p>
         <p>Enemy health: {{ $enemy->health }}</p>

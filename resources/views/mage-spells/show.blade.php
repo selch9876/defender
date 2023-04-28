@@ -33,10 +33,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="base_resistance" class="col-md-4 col-form-label text-md-right">{{ __('Mana Cost') }}</label>
+                            <label for="mc" class="col-md-4 col-form-label text-md-right">{{ __('Mana Cost') }}</label>
 
                             <div class="col-md-6">
-                                <input id="base_resistance" type="text" class="form-control" name="description" value="{{ $mageSpell->mc }}" disabled>
+                                <input id="mc" type="text" class="form-control" name="mc" value="{{ $mageSpell->mc }}" disabled>
                             </div>
                         </div>
 

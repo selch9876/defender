@@ -46,7 +46,7 @@ class MageSpellController extends Controller
         $mageSpell = new MageSpell([
             'name' => $request->input('name'),
             'level' => $request->input('level'),
-            'damage' => $request->input('damage'),
+            'dice' => $request->input('dice'),
             'mc' => $request->input('mc'),
         ]);
 

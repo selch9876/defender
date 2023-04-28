@@ -9,6 +9,7 @@ use App\Models\Character;
 use App\Models\Dragon;
 use App\Models\Goblin;
 use App\Models\Orc;
+use App\Models\Rat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,6 +79,7 @@ class GameController extends Controller
             $dragon = new Dragon(),
             $goblin = new Goblin(),
             $orc = new Orc(),
+            $rat = new Rat(),
         ];
 
         $index = rand(0, count($enemies) - 1);

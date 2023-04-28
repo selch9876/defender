@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMonstersTable extends Migration
+class CreateInventoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateMonstersTable extends Migration
      */
     public function up()
     {
-        Schema::create('monsters', function (Blueprint $table) {
+        Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('level')->default(1);
-            $table->integer('health')->default(10);
-            $table->integer('damage')->default(2);
-            $table->integer('xp')->default(20);
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ class CreateMonstersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('monsters');
+        Schema::dropIfExists('inventories');
     }
 }

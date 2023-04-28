@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Enemy;
 use App\Models\Fight;
 use App\Models\Round;
-use App\Models\Character;
-use App\Models\MageSpell;
 use App\Models\Monster;
+use App\Models\Character;
+use App\Models\Inventory;
+use App\Models\MageSpell;
 use Illuminate\Http\Request;
 
 class FightController extends Controller
@@ -15,7 +17,12 @@ class FightController extends Controller
     public function fight()
     {
         $fight = Fight::find(request()->get('id'));
+       
         $character = Character::find($fight->character_id);
+        
+        $sword = Item::findOrFail(1); // Get the item
+
+        $character->items()->syncWithoutDetaching([$sword->id => ['quantity' => 1]]);
         $enemy = Monster::find($fight->monster_id);
         return view('game.fight', [
             'fight' => $fight,
@@ -23,6 +30,8 @@ class FightController extends Controller
             'enemy' => $enemy,
         ]);
     }
+
+  
     
     public function attack(Request $request)
     {
@@ -37,6 +46,11 @@ class FightController extends Controller
         $defender->takeDamage($damage);
         
         if ($defender->isDead()) {
+            $attacker->xp += $defender->xp;
+            if (floor($attacker->xp / 100) >= $attacker->level) {
+                $attacker->levelUp();
+            }
+            $attacker->save();
             $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
@@ -72,13 +86,18 @@ class FightController extends Controller
         
         $damage = round($attacker->attack() / 2);
         $defenderDamage = round($defender->attack() / 2);
-        //dd($damage);
+       
         $defender->takeDamage($damage);
-        $heal =  rand(2, 20);
+        $heal =  rand(5, 20);
         $smallHeal = round($heal / 3); 
         $defender->heal($smallHeal);
         
         if ($defender->isDead()) {
+            $attacker->xp += $defender->xp;
+            if (floor($attacker->xp / 100) >= $attacker->level) {
+                $attacker->levelUp();
+            }
+            $attacker->save();
             $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
@@ -119,6 +138,11 @@ class FightController extends Controller
         $defender->takeDamage($damage);
         
         if ($defender->isDead()) {
+            $attacker->xp += $defender->xp;
+            if (floor($attacker->xp / 100) >= $attacker->level) {
+                $attacker->levelUp();
+            }
+            $attacker->save();
             $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
@@ -152,6 +176,11 @@ class FightController extends Controller
         $defender->takeDamage($damage);
         
         if ($defender->isDead()) {
+            $attacker->xp += $defender->xp;
+            if (floor($attacker->xp / 100) >= $attacker->level) {
+                $attacker->levelUp();
+            }
+            $attacker->save();
             $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
@@ -190,6 +219,11 @@ class FightController extends Controller
         }
         
         if ($defender->isDead()) {
+            $attacker->xp += $defender->xp;
+            if (floor($attacker->xp / 100) >= $attacker->level) {
+                $attacker->levelUp();
+            }
+            $attacker->save();
             $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }

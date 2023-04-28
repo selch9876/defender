@@ -49,22 +49,56 @@ class Character extends Model
         return $this->hasMany(Round::class, 'attacker_id');
     }
 
+    public function items()
+    {
+        return $this->belongsToMany(Item::class)->withPivot('quantity');
+    }
+
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class);
+    }
+
     // Methods
+    
+    public function getInventory()
+    {
+        return $this->items()->get()->map(function($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->name,
+                'description' => $item->description,
+                'quantity' => $item->pivot->quantity
+            ];
+        });
+    }
+
+    public function getItemQuantity($item)
+    {
+        return $this->items()->where('item_id', $item->id)->first()->pivot->quantity ?? 0;
+    }
+
+    public function getEquippedWeapon()
+    {
+        return $this->items()->where('type', 'weapon')->first();
+    }
+    
+    //Combat Methods
     public function getDefence()
     {
-        return round($this->dex / 3);
+        return floor($this->dex / 3) + $this->playerClass->base_defence;
     }
 
     public function castSpell($mageSpell)
     {
         // Implementation of the castSpell method
-        $spellPower = $mageSpell->damage * $this->level;
+        
+        $spellPower =  $this->level * $mageSpell->calculateDamage();
         $this->mp -= $mageSpell->mc;
         if ($this->mp < 0) {
             $this->mp = 0;
         }
         $this->save();
-        //dd($mageSpell->mc);
         return $spellPower;
     }
 
@@ -76,7 +110,7 @@ class Character extends Model
      */
     public function takeDamage(int $damage)
     {
-        $this->hp -= $damage;
+        $this->hp -= $damage - $this->getDefence();
         if ($this->hp < 0) {
             $this->hp = 0;
         }
@@ -93,7 +127,11 @@ class Character extends Model
 
     public function attack()
     {
-        $attackPower = $this->playerClass->base_attack * rand(10, 20);
+        $attackPower = $this->playerClass->base_attack * rand(1, 5);
+        $weapon = $this->getEquippedWeapon();
+        //dd($weapon->name);
+        $weaponDamage =  $weapon->damage();
+        $attackPower += $weaponDamage;
         return $attackPower;
     }
 

@@ -41,12 +41,12 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="damage" class="col-md-4 col-form-label text-md-right">{{ __('Damage') }}</label>
+                                <label for="dice" class="col-md-4 col-form-label text-md-right">{{ __('Dice') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="damage" type="number" min="10" max="100" class="form-control @error('damage') is-invalid @enderror" name="damage" value="{{ old('damage', optional($mageSpell ?? null)->damage) }}" required autocomplete="damage" autofocus>
+                                    <input id="dice" type="text"  class="form-control @error('dice') is-invalid @enderror" name="dice" value="{{ old('dice', optional($mageSpell ?? null)->damage) }}" required autocomplete="dice" autofocus>
 
-                                    @error('damage')
+                                    @error('dice')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

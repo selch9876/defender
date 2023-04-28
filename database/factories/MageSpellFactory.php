@@ -25,7 +25,7 @@ class MageSpellFactory extends Factory
                 'name' => 'Magic Missile',
                 'level' => 1,
                 'mc' => 5,
-                'damage' => 1,
+                'dice' => '1d4',
             ];
         });
     }
