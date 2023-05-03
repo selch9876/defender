@@ -12,7 +12,7 @@ class MageSpell extends Model
     protected $fillable = [
         'name',
         'level',
-        'damage',
+        'dice',
         'mc',
     ];
 

@@ -35,7 +35,7 @@
                                         <tr>
                                             <td>{{ $spell->name }}</td>
                                             <td>{{ $spell->level }}</td>
-                                            <td>{{ $spell->damage }}</td>
+                                            <td>{{ $spell->dice }}</td>
                                             <td>{{ $spell->mc }}</td>
                                             <td>
                                                 <a href="{{ route('mage-spell.show', $spell->id) }}" class="btn btn-sm btn-primary">{{ __('View') }}</a>

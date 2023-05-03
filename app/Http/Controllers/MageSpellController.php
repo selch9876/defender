@@ -97,7 +97,7 @@ class MageSpellController extends Controller
 
         $validated['name'] = $request->get('name');
         $validated['level'] = $request->get('level');
-        $validated['damage'] = $request->get('damage');
+        $validated['dice'] = $request->get('dice');
         $validated['mc'] = $request->get('mc');
         
         $mageSpell ->fill($validated);

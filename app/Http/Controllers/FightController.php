@@ -31,15 +31,25 @@ class FightController extends Controller
         ]);
     }
 
+    function getFightObjects($fight_id) {
+        $fight = Fight::findOrFail($fight_id);
+        $attacker = $fight->character;
+        $defender = $fight->monster;
+        
+        return [
+            'fight' => $fight,
+            'attacker' => $attacker,
+            'defender' => $defender,
+        ];
+    }
   
     
     public function attack(Request $request)
     {
-        $fight = Fight::findOrFail($request->input('fight_id'));
-        $character = $fight->character;
-        $monster = $fight->monster;
-        $attacker = $character;
-        $defender = $monster;
+        $data = $this->getFightObjects($request->input('fight_id'));
+        $fight = $data['fight'];
+        $attacker = $data['attacker'];
+        $defender = $data['defender'];
         
         $damage = $attacker->attack();
         $defenderDamage = $defender->attack();
@@ -48,16 +58,22 @@ class FightController extends Controller
         if ($defender->isDead()) {
             $attacker->xp += $defender->xp;
             if (floor($attacker->xp / 100) >= $attacker->level) {
-                $attacker->levelUp();
+                $dif = ($attacker->xp / 100) - $attacker->level;
+                for ($i=0; $i < $dif; $i++) { 
+                    $attacker->levelUp();
+                }
+                
             }
             $attacker->save();
-            $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
+            $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' 
+            . $damage . ' damage and ' .$defender->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
         $attacker->takeDamage($defenderDamage);
 
         if ($attacker->isDead()) {
-            $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' . $damage . ' damage and ' .$attacker->name . ' is dead!');
+            $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' 
+            . $damage . ' damage and ' .$attacker->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
         
@@ -72,25 +88,26 @@ class FightController extends Controller
             $fight->save();
         }
         $round->addTurn($attacker, $defender, $damage);
-        $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage! ' . $defender->name . ' Hits '. $attacker->name. ' for ' . $defenderDamage . ' damage!');
+        $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' 
+        . $damage . ' damage! ' . $defender->name . ' Hits '. $attacker->name. ' for ' . $defenderDamage . ' damage!');
         return redirect()->route('fight', ['id' => $fight->id]);
     }
 
     public function defend(Request $request)
     {
-        $fight = Fight::findOrFail($request->input('fight_id'));
-        $character = $fight->character;
-        $monster = $fight->monster;
-        $attacker = $monster;
-        $defender = $character;
+        $data = $this->getFightObjects($request->input('fight_id'));
+        $fight = $data['fight'];
+        $attacker = $data['attacker'];
+        $defender = $data['defender'];
         
         $damage = round($attacker->attack() / 2);
         $defenderDamage = round($defender->attack() / 2);
        
+        
         $defender->takeDamage($damage);
         $heal =  rand(5, 20);
         $smallHeal = round($heal / 3); 
-        $defender->heal($smallHeal);
+        $attacker->heal($smallHeal);
         
         if ($defender->isDead()) {
             $attacker->xp += $defender->xp;
@@ -98,13 +115,15 @@ class FightController extends Controller
                 $attacker->levelUp();
             }
             $attacker->save();
-            $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
+            $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' 
+            . $damage . ' damage and ' .$defender->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
         $attacker->takeDamage($defenderDamage);
 
         if ($attacker->isDead()) {
-            $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' . $damage . ' damage and ' .$attacker->name . ' is dead!');
+            $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' 
+            . $damage . ' damage and ' .$attacker->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
         
@@ -120,30 +139,27 @@ class FightController extends Controller
         }
         $round->addTurn($attacker, $defender, $damage);
         $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . 
-        ' damage! ' . $defender->name . ' Hits '. $attacker->name. ' for ' . $defenderDamage . ' damage! ' . $defender->name . ' heals for ' . $smallHeal . ' damage!');
+        ' damage! ' . $defender->name . ' Hits '. $attacker->name. ' for ' . $defenderDamage . ' damage! ' 
+        . $attacker->name . ' heals for ' . $smallHeal . ' damage!');
         return redirect()->route('fight', ['id' => $fight->id]);
     }
 
     public function heal(Request $request)
     {
-        $fight = Fight::findOrFail($request->input('fight_id'));
-        $character = $fight->character;
-        $monster = $fight->monster;
-        $attacker = $monster;
-        $defender = $character;
+        $data = $this->getFightObjects($request->input('fight_id'));
+        $fight = $data['fight'];
+        $attacker = $data['attacker'];
+        $defender = $data['defender'];
         
-        $damage = round($attacker->attack() / 2);
+        $damage = round($defender->attack() / 2);
         $heal =  rand(2, 20);
-        $defender->heal($heal);
-        $defender->takeDamage($damage);
+        $attacker->heal($heal);
+        $attacker->takeDamage($damage);
         
-        if ($defender->isDead()) {
-            $attacker->xp += $defender->xp;
-            if (floor($attacker->xp / 100) >= $attacker->level) {
-                $attacker->levelUp();
-            }
+        if ($attacker->isDead()) {
             $attacker->save();
-            $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
+            $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' 
+            . $damage . ' damage and ' .$attacker->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
        
@@ -159,29 +175,26 @@ class FightController extends Controller
             $fight->save();
         }
         $round->addTurn($attacker, $defender, $damage);
-        $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. 
-        ' for ' . $damage . ' damage! ' . $defender->name . ' heals for ' . $heal . ' damage!');
+        $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. 
+        ' for ' . $damage . ' damage! ' . $attacker->name . ' heals for ' . $heal . ' damage!');
         return redirect()->route('fight', ['id' => $fight->id]);
     }
 
     public function run(Request $request)
     {
-        $fight = Fight::findOrFail($request->input('fight_id'));
-        $character = $fight->character;
-        $monster = $fight->monster;
-        $attacker = $monster;
-        $defender = $character;
+        $data = $this->getFightObjects($request->input('fight_id'));
+        $fight = $data['fight'];
+        $attacker = $data['attacker'];
+        $defender = $data['defender'];
         
-        $damage = round($attacker->attack() / 2);
-        $defender->takeDamage($damage);
-        
-        if ($defender->isDead()) {
-            $attacker->xp += $defender->xp;
-            if (floor($attacker->xp / 100) >= $attacker->level) {
-                $attacker->levelUp();
-            }
+        $damage = round($defender->attack() / 2);
+        $attacker->takeDamage($damage);
+        $attacker->save();
+        if ($attacker->isDead()) {
+            
             $attacker->save();
-            $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . ' damage and ' .$defender->name . ' is dead!');
+            $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' . $damage . 
+            ' damage and ' .$attacker->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
        
@@ -197,18 +210,18 @@ class FightController extends Controller
             $fight->save();
         }
         $round->addTurn($attacker, $defender, $damage);
-        $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. 
-        ' for ' . $damage . ' damage! ' . $defender->name . ' runs from the battle!');
+        $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. 
+        ' for ' . $damage . ' damage! ' . $attacker->name . ' runs from the battle!');
         return redirect()->route('home');
     }
 
     public function cast(Request $request)
     {
-        $fight = Fight::findOrFail($request->input('fight_id'));
-        $character = $fight->character;
-        $monster = $fight->monster;
-        $attacker = $character;
-        $defender = $monster;
+        $data = $this->getFightObjects($request->input('fight_id'));
+        $fight = $data['fight'];
+        $attacker = $data['attacker'];
+        $defender = $data['defender'];
+
         $mageSpell = MageSpell::findOrFail($request->input('mage_spell_id'));
         if ($attacker->mp >= $mageSpell->mc) {
             $damage = $attacker->castSpell($mageSpell);

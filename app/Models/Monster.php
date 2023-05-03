@@ -40,6 +40,7 @@ class Monster extends Model
             $this->health = 0;
         }
         $this->save();
+        return $damage;
     }
 
     public function attack()

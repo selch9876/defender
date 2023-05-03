@@ -110,11 +110,18 @@ class Character extends Model
      */
     public function takeDamage(int $damage)
     {
-        $this->hp -= $damage - $this->getDefence();
-        if ($this->hp < 0) {
-            $this->hp = 0;
+        if ($damage > $this->getDefence()) {
+            $this->hp -= $damage - $this->getDefence();
+            if ($this->hp < 0) {
+                $this->hp = 0;
+            }
+
+            return $damage - $this->getDefence();
         }
+        
         $this->save();
+        
+        return 0;
     }
 
     public function heal($heal)
@@ -149,6 +156,5 @@ class Character extends Model
         $this->dex += 2; // Increase dexterity by 2
         $this->int += 2; // Increase intelligence by 2
     }
-
-    
+   
 }

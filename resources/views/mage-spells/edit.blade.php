@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Edit Class') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('player-class.update', $mageSpell->id) }}">
+                        <form method="POST" action="{{ route('mage-spell.update', $mageSpell->id) }}">
                             @csrf
                             @method('PUT')
 
@@ -44,7 +44,7 @@
                                 <label for="dice" class="col-md-4 col-form-label text-md-right">{{ __('Dice') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="dice" type="text"  class="form-control @error('dice') is-invalid @enderror" name="dice" value="{{ old('dice', optional($mageSpell ?? null)->damage) }}" required autocomplete="dice" autofocus>
+                                    <input id="dice" type="text"  class="form-control @error('dice') is-invalid @enderror" name="dice" value="{{ old('dice', optional($mageSpell ?? null)->dice) }}" required autocomplete="dice" autofocus>
 
                                     @error('dice')
                                         <span class="invalid-feedback" role="alert">
