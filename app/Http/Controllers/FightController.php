@@ -120,10 +120,11 @@ class FightController extends Controller
             return redirect()->route('win', ['id' => $fight->id]);
         }
         $attacker->takeDamage($defenderDamage);
+        $realDamage = $attacker->takeDamage($defenderDamage);
 
         if ($attacker->isDead()) {
             $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' 
-            . $damage . ' damage and ' .$attacker->name . ' is dead!');
+            . $realDamage . ' damage and ' .$attacker->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
         
@@ -139,7 +140,7 @@ class FightController extends Controller
         }
         $round->addTurn($attacker, $defender, $damage);
         $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' . $damage . 
-        ' damage! ' . $defender->name . ' Hits '. $attacker->name. ' for ' . $defenderDamage . ' damage! ' 
+        ' damage! ' . $defender->name . ' Hits '. $attacker->name. ' for ' . $realDamage . ' damage! ' 
         . $attacker->name . ' heals for ' . $smallHeal . ' damage!');
         return redirect()->route('fight', ['id' => $fight->id]);
     }
@@ -155,11 +156,15 @@ class FightController extends Controller
         $heal =  rand(2, 20);
         $attacker->heal($heal);
         $attacker->takeDamage($damage);
+        $attacker->save();
+
+        $realDamage = $attacker->takeDamage($damage);
+        
         
         if ($attacker->isDead()) {
             $attacker->save();
             $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' 
-            . $damage . ' damage and ' .$attacker->name . ' is dead!');
+            . $realDamage . ' damage and ' .$attacker->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
        
@@ -176,7 +181,7 @@ class FightController extends Controller
         }
         $round->addTurn($attacker, $defender, $damage);
         $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. 
-        ' for ' . $damage . ' damage! ' . $attacker->name . ' heals for ' . $heal . ' damage!');
+        ' for ' . $realDamage . ' damage! ' . $attacker->name . ' heals for ' . $heal . ' damage!');
         return redirect()->route('fight', ['id' => $fight->id]);
     }
 
@@ -189,11 +194,13 @@ class FightController extends Controller
         
         $damage = round($defender->attack() / 2);
         $attacker->takeDamage($damage);
+        $realDamage = $attacker->takeDamage($damage);
+
         $attacker->save();
         if ($attacker->isDead()) {
             
             $attacker->save();
-            $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' . $damage . 
+            $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' . $realDamage . 
             ' damage and ' .$attacker->name . ' is dead!');
             return redirect()->route('win', ['id' => $fight->id]);
         }
@@ -211,7 +218,7 @@ class FightController extends Controller
         }
         $round->addTurn($attacker, $defender, $damage);
         $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. 
-        ' for ' . $damage . ' damage! ' . $attacker->name . ' runs from the battle!');
+        ' for ' . $realDamage . ' damage! ' . $attacker->name . ' runs from the battle!');
         return redirect()->route('home');
     }
 
