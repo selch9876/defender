@@ -17,9 +17,9 @@ class CreateCharactersItemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('character_id');
             $table->unsignedBigInteger('item_id');
+            $table->tinyInteger('equipped')->default(0);
             $table->integer('quantity')->default(0);
             $table->timestamps();
-
             $table->foreign('character_id')->references('id')->on('characters')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
         });

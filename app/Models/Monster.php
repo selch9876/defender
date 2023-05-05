@@ -15,6 +15,7 @@ class Monster extends Model
         'health',
         'damage',
         'xp',
+        'gold',
     ];
 
     public function fights()

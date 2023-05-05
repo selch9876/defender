@@ -5,6 +5,7 @@ use App\Http\Controllers\FightController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\MageSpellController;
 use App\Http\Controllers\PlayerClassController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,9 @@ Route::resource('/character', CharacterController::class);
 Route::resource('/player-class', PlayerClassController::class);
 Route::resource('/mage-spell', MageSpellController::class);
 
+Route::middleware('auth')->post('/select-character', [CharacterController::class, 'select'])->name('select-character');
+
+
 // Game Routes
 Route::get('/fight', [FightController::class, 'fight'] )->name('fight');
 Route::post('/attack', [FightController::class, 'attack'] )->name('fight.attack');
@@ -46,4 +50,12 @@ Route::post('/run', [FightController::class, 'run'] )->name('fight.run');
 Route::post('/cast', [FightController::class, 'cast'] )->name('fight.cast');
 Route::post('/start-game', [GameController::class, 'startGame'])->name('start-game');
 Route::get('/win/{id}', [FightController::class, 'win'])->name('win');
+
+//Shop Routes
+//Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::post('/shop/buy', [ShopController::class, 'buy'])->name('shop.buy');
+Route::post('/shop/sell', [ShopController::class, 'sell'])->name('shop.sell');
+Route::middleware(['auth', 'characterselected'])->get('/shop', [ShopController::class, 'index'])->name('shop');
+
+
 

@@ -30,6 +30,21 @@ class CharacterController extends Controller
         return view('characters.index', compact('characters'));
     }
 
+    public function select(Request $request)
+    {
+        $request->validate([
+            'character' => 'required|exists:characters,id',
+        ]);
+
+        $user = $request->user();
+        $selectedCharacterId = $request->input('character');
+
+        // Store the selected character ID in the session
+        $request->session()->put('selected_character_id', $selectedCharacterId);
+
+        return redirect()->route('home');
+    }
+
 
     /**
      * Show the form for creating a new resource.

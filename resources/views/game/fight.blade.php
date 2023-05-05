@@ -11,7 +11,12 @@
                       <p>Health: <span id="character-health">{{ $character->hp }}</span></p>
                       <p>Level: <span id="character-health">{{ $character->level }}</span></p>
                       <p>Spell Power: <span id="character-health">{{ $character->mp }}</span></p>
+                      @if ($character->getEquippedWeapon())
                       <p>Weapon: <span id="character-health">{{ $character->getEquippedWeapon()->name }}</span></p>
+                      @else
+                      <p>Weapon: <span id="character-health">None!</span></p>
+                      @endif
+                      
                     </div>
                 </div>
             </div>

@@ -20,6 +20,7 @@ class CreateMonstersTable extends Migration
             $table->integer('health')->default(10);
             $table->integer('damage')->default(2);
             $table->integer('xp')->default(20);
+            $table->integer('gold')->default(20);
             $table->timestamps();
         });
     }

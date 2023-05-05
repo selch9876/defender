@@ -23,6 +23,7 @@ class CreateCharactersTable extends Migration
             $table->unsignedInteger('str');
             $table->unsignedInteger('dex');
             $table->unsignedInteger('int');
+            $table->unsignedInteger('gold')->default(100);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

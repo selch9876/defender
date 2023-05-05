@@ -19,6 +19,7 @@ class Character extends Model
         'dex',
         'int',
         'class_id',
+        'gold',
     ];
 
     
@@ -135,10 +136,13 @@ class Character extends Model
     public function attack()
     {
         $attackPower = $this->playerClass->base_attack * rand(1, 5);
-        $weapon = $this->getEquippedWeapon();
-        //dd($weapon->name);
-        $weaponDamage =  $weapon->damage();
-        $attackPower += $weaponDamage;
+        if ($this->getEquippedWeapon()!= null) {
+            $weapon = $this->getEquippedWeapon();
+            //dd($weapon->name);
+            $weaponDamage =  $weapon->damage();
+            $attackPower += $weaponDamage;
+        }
+        
         return $attackPower;
     }
 

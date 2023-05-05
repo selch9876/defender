@@ -18,7 +18,8 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->integer('value');
-            $table->string('type');
+            $table->enum('rarity', ['common', 'uncommon', 'rare', 'epic', 'legendary'])->default('common');
+            $table->enum('type', ['weapon', 'armor', 'consumable'])->default('weapon');
             $table->string('dice')->default("");
             $table->timestamps();
         });

@@ -24,9 +24,10 @@ class GameController extends Controller
     { 
         $user = Auth::user();  
         $characters = $user->characters;
+        $character = Character::findOrFail(session('selected_character_id'));
         //dd($characters);
         return view('game.index', [
-            'characters' => $characters,
+            'character' => $character,
         ]);
     }
 

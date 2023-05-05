@@ -20,9 +20,9 @@ class FightController extends Controller
        
         $character = Character::find($fight->character_id);
         
-        $sword = Item::findOrFail(1); // Get the item
+        //$sword = Item::findOrFail(1); // Get the item
 
-        $character->items()->syncWithoutDetaching([$sword->id => ['quantity' => 1]]);
+       // $character->items()->syncWithoutDetaching([$sword->id => ['quantity' => 1]]);
         $enemy = Monster::find($fight->monster_id);
         return view('game.fight', [
             'fight' => $fight,

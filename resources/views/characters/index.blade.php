@@ -24,6 +24,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>{{ __('Name') }}</th>
                                         <th>{{ __('Class') }}</th>
                                         <th>{{ __('Level') }}</th>
@@ -39,7 +40,16 @@
                                 <tbody>
                                     @foreach($characters as $character)
                                         <tr>
-                                            <td>{{ $character->name }}</td>
+                                            <td>
+                                                <form method="POST" action="{{ route('select-character') }}">
+                                                    @csrf
+                                                    <label><input type="checkbox" name="character" class=""  value="{{ $character->id }}" {{$character->id == session('selected_character_id')  ? 'checked' : ''}}></label>
+                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                        {{ __('Select') }}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td><h4>{{ $character->name }}</h4></td>
                                             <td>{{ $character->playerClass->name }}</td>
                                             <td>{{ $character->level }}</td>
                                             <td>{{ $character->xp }}</td>

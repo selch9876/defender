@@ -80,6 +80,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Gold') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="text" class="form-control" name="class" value="{{ $character->gold  }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="mage_spells" class="col-md-4 col-form-label text-md-right">{{ __('Mage Spells') }}</label>
                             <div class="col-md-6">
                                 @forelse ($mageSpells as $mageSpell)

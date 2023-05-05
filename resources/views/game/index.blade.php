@@ -11,22 +11,18 @@
             <div class="col">
                 <form method="POST" action="{{ route('start-game') }}">
                 @csrf
-                <ul class="bg-dark text-white">
-                    <p>Please choose a character:</p>
-                    @foreach ($characters as $character)
-                        <li>
-                            <input type="radio" name="character_id" value="{{ $character->id }}" id="{{ $character->id }}" required>
-                            <strong>{{ $character->name }}</strong> (Level {{ $character->level }}  {{ $character->playerClass->name }})
-                            <br>
-                            Health: {{ $character->hp }}
-                            <br>
-                            Mana Power: {{ $character->mp }}
-                            <br>
-                            Experience: {{ $character->xp }}
-                            
-                        </li>
-                    @endforeach
-                </ul>
+                
+                <input type="hidden" name="character_id" value="{{ $character->id }}" id="{{ $character->id }}" required>
+                <strong>{{ $character->name }}</strong> (Level {{ $character->level }}  {{ $character->playerClass->name }})
+                <br>
+                Health: {{ $character->hp }}
+                <br>
+                    @if ($character->playerClass->id == 2)
+                    Mana Power: {{ $character->mp }}
+                    <br>
+                    @endif
+                Experience: {{ $character->xp }}
+                        
                 <button type="submit">Start Game</button>
                 </form>
             </div>
