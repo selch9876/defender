@@ -1,12 +1,15 @@
 <?php
 
-use App\Http\Controllers\CharacterController;
-use App\Http\Controllers\FightController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FightController;
+use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MageSpellController;
 use App\Http\Controllers\PlayerClassController;
-use App\Http\Controllers\ShopController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,10 +36,24 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('/game', GameController::class);
+//Admin Page Routes
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+Route::get('/admin/players', [AdminController::class, 'players'])->name('admin.players');
+Route::get('/admin/player-classes', [AdminController::class, 'playerClasses'])->name('admin.player-classes');
+Route::get('/admin/mage-spells', [AdminController::class, 'mageSpells'])->name('admin.mage-spells');
+Route::get('/admin/items', [AdminController::class, 'items'])->name('admin.items');
+
+//Game Routes
+Route::resource('/game', GameController::class)->except(['index']);
+Route::middleware(['auth', 'characterselected'])->get('/game', [GameController::class, 'index'])->name('game');
+
 Route::resource('/character', CharacterController::class);
 Route::resource('/player-class', PlayerClassController::class);
 Route::resource('/mage-spell', MageSpellController::class);
+Route::resource('/item', ItemController::class);
+Route::resource('/user', UserController::class);
+
 
 Route::middleware('auth')->post('/select-character', [CharacterController::class, 'select'])->name('select-character');
 

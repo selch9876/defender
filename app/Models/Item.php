@@ -2,17 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Item extends Model
 {
     use HasFactory;
+    use Sortable;
 
     protected $fillable = [
         'name',
         'description',
         'value',
+        'rarity',
+        'type',
+        'dice',
+    ];
+
+    protected $sortable = [
+        'name',
+        'description',
+        'value',
+        'rarity',
         'type',
         'dice',
     ];
@@ -20,6 +32,11 @@ class Item extends Model
     public function characters()
     {
         return $this->belongsToMany(Character::class)->withPivot('quantity');
+    }
+
+    public function image()
+    {
+        return $this->hasOne(Image::class);
     }
 
     public function damage()

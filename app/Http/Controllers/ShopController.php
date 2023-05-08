@@ -18,10 +18,7 @@ class ShopController extends Controller
     {
         $items = Item::all();
         $gold = $character->gold;
-        /* $selectedCharacterId = session()->get('selected_character_id'); */
-        $selectedCharacterId = session('selected_character_id');
-        $character = Character::findOrFail($selectedCharacterId);
-        //dd($character->name);
+        dd($character);
 
         return view('shop.index', compact('items', 'gold', 'character'));
     }

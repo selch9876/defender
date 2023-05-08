@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MageSpell extends Model
 {
     use HasFactory;
+    use Sortable;
 
     protected $fillable = [
+        'name',
+        'level',
+        'dice',
+        'mc',
+    ];
+
+    protected $sortable = [
         'name',
         'level',
         'dice',
@@ -19,6 +28,11 @@ class MageSpell extends Model
     public function characters()
     {
         return $this->belongsToMany(Character::class)->withTimestamps();
+    }
+
+    public function image()
+    {
+        return $this->hasOne(Image::class);
     }
 
     //Methods 

@@ -22,10 +22,8 @@ class GameController extends Controller
 
     public function index()
     { 
-        $user = Auth::user();  
-        $characters = $user->characters;
+        $user = Auth::user();
         $character = Character::findOrFail(session('selected_character_id'));
-        //dd($characters);
         return view('game.index', [
             'character' => $character,
         ]);
@@ -60,19 +58,6 @@ class GameController extends Controller
         // Redirect to the fight view with the fight ID
         return redirect()->route('fight', ['id' => $fight->id]);
     }
-
-    /* public function create(Request $request)
-    {
-        $enemy = $this->generateEnemy();
-        $character = Character::find($request->input('character')) ;
-        $fight = new Fight();
-        //dd($character);
-        return view('game.fight', [
-            'enemy' => $enemy,
-            'character' => $character,
-            'fight' => $fight,
-        ]);
-    } */
 
     public static function generateEnemy()
     {

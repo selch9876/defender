@@ -9,6 +9,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         
         <title>{{ config('app.name') }}</title>
+        
+        <link rel="shortcut icon" href="{{ asset('storage/images/adnd_logo_icon.png') }}">
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
@@ -36,11 +38,11 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ route('game.index') }}">Game</a>
+                        <a class="nav-link" href="{{ url('/game') }}">Game</a>
                       </li>
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Dropdown
+                          Player
                         </a>
                         <ul class="dropdown-menu">
                           @if (Route::has('login'))
@@ -57,8 +59,6 @@
                                 </form>
                               </li>
                               <li><a class="dropdown-item" href="{{ url('/character') }}" class="text-sm">Characters</a></li>
-                              <li><a class="dropdown-item" href="{{ url('/player-class') }}" class="text-sm">Classes</a></li>
-                              <li><a class="dropdown-item" href="{{ url('/mage-spell') }}" class="text-sm">Mage Spells</a></li>
                               <li><a class="dropdown-item" href="{{ url('/shop') }}" class="text-sm">Shop</a></li>
                             @else
                               <a href="{{ route('login') }}" class="text-sm">Log in</a>

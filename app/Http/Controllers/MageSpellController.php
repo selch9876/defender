@@ -10,7 +10,7 @@ class MageSpellController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')
+        $this->middleware(['auth','admin'])
         ->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
@@ -22,7 +22,7 @@ class MageSpellController extends Controller
     public function index()
     {
         $mageSpells = MageSpell::all();
-        return view('mage-spells.index', compact('mageSpells'));
+        return view('admin.mage-spells.index', compact('mageSpells'));
     }
 
     /**
@@ -32,7 +32,7 @@ class MageSpellController extends Controller
      */
     public function create()
     {
-        return view('mage-spells.create');
+        return view('admin.mage-spells.create');
     }
 
     /**
@@ -65,7 +65,7 @@ class MageSpellController extends Controller
     public function show($id)
     {
         $mageSpell = MageSpell::findOrFail($id);
-        return view('mage-spells.show', [
+        return view('admin.mage-spells.show', [
             'mageSpell' => $mageSpell,
         ]);
     }
@@ -79,7 +79,7 @@ class MageSpellController extends Controller
     public function edit($id)
     {
         $mageSpell = MageSpell::findOrFail($id);
-        return view('mage-spells.edit', [
+        return view('admin.mage-spells.edit', [
             'mageSpell' => $mageSpell,
         ]);
     }
@@ -120,8 +120,8 @@ class MageSpellController extends Controller
 
         $mageSpell->delete();
 
-        $request->session()->flash('status', 'Spell was deleted!');
-
+        $request->session()->flash('status', 'Spell deleted!');
+        
         return redirect()->route('mage-spell.index');
     }
 }

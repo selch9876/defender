@@ -4,12 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Monster extends Model
 {
     use HasFactory;
+    use Sortable;
 
     protected $fillable = [
+        'name',
+        'level',
+        'health',
+        'damage',
+        'xp',
+        'gold',
+    ];
+
+    protected $sortable = [
         'name',
         'level',
         'health',
@@ -26,6 +37,11 @@ class Monster extends Model
     public function rounds()
     {
         return $this->hasMany(Round::class, 'defender_id');
+    }
+
+    public function image()
+    {
+        return $this->hasOne(Image::class);
     }
 
     /**

@@ -10,7 +10,7 @@ class PlayerClassController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')
+        $this->middleware(['auth','admin'])
         ->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
@@ -22,8 +22,8 @@ class PlayerClassController extends Controller
     public function index()
     {
         
-        $classes = PlayerClass::all();
-        return view('player-classes.index', compact('classes'));
+        $playerClasses = PlayerClass::all();
+        return view('admin.player-classes.index', compact('playerClasses'));
     }
 
     /**
@@ -33,7 +33,7 @@ class PlayerClassController extends Controller
      */
     public function create()
     {
-        return view('player-classes.create');
+        return view('admin.player-classes.create');
     }
 
     /**
@@ -70,7 +70,7 @@ class PlayerClassController extends Controller
     public function show($id)
     {
         $playerClass = PlayerClass::findOrFail($id);
-        return view('player-classes.show', [
+        return view('admin.player-classes.show', [
             'playerClass' => $playerClass,
         ]); 
     }
@@ -84,7 +84,7 @@ class PlayerClassController extends Controller
     public function edit($id)
     {
         $playerClass = PlayerClass::findOrFail($id);
-        return view('player-classes.edit', [
+        return view('admin.player-classes.edit', [
             'playerClass' => $playerClass,
         ]);
     }
@@ -130,6 +130,6 @@ class PlayerClassController extends Controller
 
         $request->session()->flash('status', 'Class was deleted!');
 
-        return redirect()->route('player-class.index');
+        return redirect()->route('admin.player-classes');
     }
 }

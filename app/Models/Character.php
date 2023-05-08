@@ -2,14 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Character extends Model
 {
     use HasFactory;
+    use Sortable;
 
     protected $fillable = [
+        'name',
+        'xp',
+        'level',
+        'hp',
+        'mp',
+        'str',
+        'dex',
+        'int',
+        'class_id',
+        'gold',
+    ];
+
+    public $sortable = [
         'name',
         'xp',
         'level',

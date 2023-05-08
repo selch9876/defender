@@ -1,0 +1,254 @@
+/************************************Festivals Page Styles***********************************/
+.bg-image {
+  /* The image used */
+  transform: skewY(354deg);
+  z-index: 1;
+  min-height: 668px;
+  position: relative;
+  top: -160px;
+  filter: drop-shadow(-14px -360px 155px black);
+}
+
+.bg-image-2 {
+  /* The image used */
+  transform: skewY(354deg);
+  z-index: 0;
+  min-height: 60px;
+  position: relative;
+  top: -160px;
+  filter: drop-shadow(-14px -165px 155px black);
+}
+
+.bg-image-3 {
+  /* The image used */
+  transform: skewY(354deg);
+  z-index: 0;
+  min-height: 60px;
+  position: relative;
+  top: -160px;
+  filter: drop-shadow(-14px -165px 155px black);
+}
+
+.bg-image-4 {
+  /* The image used */
+  transform: skewY(354deg);
+  z-index: 0;
+  min-height: 900px;
+  position: relative;
+  top: -1000px;
+  filter: drop-shadow(-14px -165px 155px black);
+}
+
+.programs-nav {
+  position: relative;
+  top: 160px;
+  margin: 20px;
+  width: auto;
+}
+.programs-header {
+  text-align: center; 
+  margin-bottom:1em;
+}
+.program-show {
+  z-index: 100;
+}
+
+
+
+.video {
+  position: relative;
+  top: -90em;
+  margin-bottom: -50em;
+  font-family: EncodeSansBlack;
+  z-index: 99;
+}
+.video-single-program {
+  position: relative;
+  top: -90em;
+  margin-bottom: -80em;
+  font-family: EncodeSansBlack;
+  z-index: 99;
+}
+.video span {
+  font-family: EncodeSansRegular;
+}
+
+.last-4 {
+  position: relative;
+  top: -35em;
+  z-index: 1;
+  margin-bottom: -25em;
+}
+
+.last-4 span {
+  font-family: EncodeSansBold;
+  font-weight: bolder;
+}
+.last-4 p {
+  font-family: EncodeSansMedium;
+}
+.program-list-header {
+  font-family: EncodeSansBlack;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.last-4 a {
+  color: black;
+}
+  
+  .program-list-header {
+    font-family: EncodeSansBold;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  
+  /************************************Responsive Media Queries***********************************/
+@media only screen and (max-width: 500px) {
+
+  .mobile-menu-programs {
+    display: block !important;
+    transform: skewY(354deg);
+    z-index: 99;
+    min-height: 500px;
+    position: relative;
+    top: -130px;
+    filter: drop-shadow(-14px -360px 155px black);
+  }
+
+  .menu-programs {
+    display: none !important;
+  }
+  .bg-image {
+    /* The image used */
+    transform: skewY(354deg);
+    z-index: 99;
+    min-height: 635px;
+    position: relative;
+    top: -129px;
+    filter: drop-shadow(-14px -360px 155px black);
+  }
+  
+  .bg-image-2 {
+    /* The image used */
+    transform: skewY(354deg);
+    z-index: 0;
+    min-height: 67px;
+    position: relative;
+    top: -163px;
+    filter: drop-shadow(-14px -165px 155px black);
+  }
+  
+  .bg-image-3 {
+    /* The image used */
+    transform: skewY(354deg);
+    z-index: 0;
+    min-height: 119px;
+    position: relative;
+    top: -257px;
+    filter: drop-shadow(-14px -165px 155px black);
+  }
+  
+  .bg-image-4 {
+    /* The image used */
+    transform: skewY(354deg);
+    z-index: 0;
+    min-height: 866px;
+    position: relative;
+    top: -1100px;
+    filter: drop-shadow(-14px -165px 155px black);
+  }
+
+  .bg-image-single {
+    /* The image used */
+    transform: skewY(354deg);
+    z-index: 99;
+    min-height: 500px;
+    position: relative;
+    top: -129px;
+    filter: drop-shadow(-14px -360px 155px black);
+  }
+  
+  .programs-header {
+    color: #ffffff;
+  }
+  .program-badger {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0;
+    height: 0;
+    border-top: 50px solid rgb(0, 0, 0, 0.5);
+    border-right: 50px solid transparent;
+  }
+
+  .program-badger p {
+    position: absolute;
+    top: -43px;
+    left: 4px;
+    transform: rotate(-45deg);
+    color: white;
+    font-family: EncodeSansBold;
+    font-size: 12px;
+  }
+  .programs-nav {
+    position: relative;
+    top: 160px;
+    margin: 20px;
+    width: auto;
+  }
+  .program-show {
+    z-index: 100;
+  }
+  
+  .navbar {
+    overflow: hidden;
+    transform: skewY(-354deg);
+    z-index: 99;
+  }
+  
+  .video {
+    position: relative;
+    top: -82em;
+    margin-bottom: -82em;
+    font-family: EncodeSansBlack;
+    z-index: 998;
+  }
+  .video span {
+    font-family: EncodeSansRegular;
+  }
+
+  .last-2 {
+    display: block !important;
+    position: relative;
+    top: -30em;
+    z-index: 1;
+    margin-bottom: -30em;
+  }
+  
+  .last-4 {
+    display: none;
+    position: relative;
+    top: -35em;
+    z-index: 1;
+    margin-bottom: -25em;
+  }
+  
+  .last-2 span {
+    font-family: EncodeSansBold;
+    font-weight: bolder;
+  }
+  .last-2 p {
+    font-family: EncodeSansMedium;
+  }
+  .program-list-header {
+    font-family: EncodeSansBlack;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  
+  .last-2 a {
+    color: black;
+  }
+
+}

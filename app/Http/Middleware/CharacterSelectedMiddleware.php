@@ -17,8 +17,9 @@ class CharacterSelectedMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = $request->user();
+        $user = auth()->user();
         $selectedCharacterId = session('selected_character_id');
+        
 
         if (!$selectedCharacterId) {
             // Character not selected, redirect to character selection page
