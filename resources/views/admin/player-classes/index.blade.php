@@ -37,6 +37,7 @@
                         <th>{{ __('Base Attack') }}</th>
                         <th>{{ __('Base Defence') }}</th>
                         <th>{{ __('Special Ability') }}</th>
+                        <th></th>
                   </tr>
                 </thead>
 
@@ -50,6 +51,14 @@
                             <td>{{ $class->base_attack }}</td>
                             <td>{{ $class->base_defence }}</td>
                             <td>{{ $class->special_ability }}</td>
+                            <td class="text-right col-2">
+                              @if ($class->image)
+                                <img src="{{ $class->image->url() }}" alt="" width="50%">
+                              @else
+                                <img src="" alt="">
+                              @endif
+                            </td>
+                          <td>
                             <td>
                                 <a href="{{ route('player-class.show', $class->id) }}" class="btn btn-sm btn-primary">{{ __('View') }}</a>
                                 <a href="{{ route('player-class.edit', $class->id) }}" class="btn btn-sm btn-secondary">{{ __('Edit') }}</a>

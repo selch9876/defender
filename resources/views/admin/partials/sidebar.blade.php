@@ -20,7 +20,7 @@
         </li>
         <li><a><i class="fa fa-user"></i> Mage Spells <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-            <li><a href="{{ route('mage-spell.create') }}">Add Mage Class</a></li>
+            <li><a href="{{ route('mage-spell.create') }}">Add Mage Spell</a></li>
             <li><a href="{{ route('admin.mage-spells') }}">Mage Spells</a></li>
           </ul>
         </li>

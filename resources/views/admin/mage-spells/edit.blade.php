@@ -6,9 +6,14 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Edit Class') }}</div>
+                        @if(session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('mage-spell.update', $mageSpell->id) }}">
+                        <form method="POST" action="{{ route('mage-spell.update', $mageSpell->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -65,6 +70,13 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="thumbnail" class="col-md-4 col-form-label text-md-right">{{ __('Thumbnail') }}</label>
+                                <div class="col-md-6">
+                                    <input type="file" name="thumbnail" class="form-control-file"/>
                                 </div>
                             </div>
                             <!-- Additional character details -->

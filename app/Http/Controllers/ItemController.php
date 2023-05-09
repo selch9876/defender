@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreItem;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -41,24 +43,17 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreItem $request)
     {
-        $item = new Item([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'value' => $request->input('value'),
-            'rarity' => $request->input('rarity'),
-            'type' => $request->input('type'),
-            'dice' => $request->input('dice'),
-            'thumbnail' => $request->input('thumbnail'),
-        ]);
+        $validated = $request->validated();
+        $item =  Item::create($validated);
 
-        $itemTitle = preg_replace('/[^A-Za-z0-9\-]/', '_', $item->name);
+        $itemName = preg_replace('/[^A-Za-z0-9\-]/', '_', $item->name);
 
         if ($request->hasFile('thumbnail')) {
             $ext = $request->file('thumbnail')->guessExtension();
             $fileName = $request->file('thumbnail')->getClientOriginalName();
-            $path = $request->file('thumbnail')->storeAs('thumbnails', $item->id .'_'.$fileName.'_'.$itemTitle . '_Item.' . $ext );
+            $path = $request->file('thumbnail')->storeAs('thumbnails', $item->id .'_'.$fileName.'_'.$itemName . '_Item.' . $ext );
             $item->image()->save(
                 Image::create(['path'=>$path])
             );
@@ -106,19 +101,31 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreItem $request, $id)
     {
         $item = Item::findOrFail($id);
-
-        $validated['name'] = $request->get('name');
-        $validated['description'] = $request->get('description');
-        $validated['value'] = $request->get('value');
-        $validated['rarity'] = $request->get('rarity');
-        $validated['type'] = $request->get('type');
-        $validated['dice'] = $request->get('dice');
-        
+        $validated = $request->validated();
         $item ->fill($validated);
-       
+
+        $itemName = preg_replace('/[^A-Za-z0-9\-]/', '_', $item->name);
+        
+
+        if ($request->hasFile('thumbnail')) {
+            $ext = $request->file('thumbnail')->guessExtension();
+            $fileName = $request->file('thumbnail')->getClientOriginalName();
+            $path = $request->file('thumbnail')->storeAs('thumbnails', $item->id .'_'.$fileName.'_'.$itemName . '_Item.' . $ext );
+
+            if ($item->image) {
+                Storage::delete($item->image->path);
+                $item->image->path = $path;
+                $item->image->save();
+            } else {
+                $item->image()->save(
+                    Image::create(['path'=>$path])
+                );
+            }
+            
+        }
         
         $item->save();
         $request->session()->flash('status', 'Item Updated');
@@ -134,7 +141,10 @@ class ItemController extends Controller
     public function destroy(Request $request, $id)
     {
         $item = Item::findOrFail($id);
-
+        if ($item->image) {
+            Storage::delete($item->image->path);
+            $item->image->delete();
+        }
         $item->delete();
 
         $request->session()->flash('status', 'Item deleted!');

@@ -30,6 +30,7 @@
                                         <th>{{ __('Rarity') }}</th>
                                         <th>{{ __('Type') }}</th>
                                         <th>{{ __('Dice') }}</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,6 +42,13 @@
                                             <td>{{ $item->rarity }}</td>
                                             <td>{{ $item->type }}</td>
                                             <td>{{ $item->dice }}</td>
+                                            <td class="text-right col-2">
+                                                @if ($item->image)
+                                                  <img src="{{ $item->image->url() }}" alt="" width="50%">
+                                                @else
+                                                  <img src="" alt="">
+                                                @endif
+                                              </td>
                                             <td>
                                                 <a href="{{ route('item.show', $item->id) }}" class="btn btn-sm btn-primary">{{ __('View') }}</a>
                                                 <a href="{{ route('item.edit', $item->id) }}" class="btn btn-sm btn-secondary">{{ __('Edit') }}</a>

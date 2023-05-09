@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\MageSpell;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreMageSpell;
+use Illuminate\Support\Facades\Storage;
 
 class MageSpellController extends Controller
 {
@@ -41,14 +44,21 @@ class MageSpellController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMageSpell $request)
     {
-        $mageSpell = new MageSpell([
-            'name' => $request->input('name'),
-            'level' => $request->input('level'),
-            'dice' => $request->input('dice'),
-            'mc' => $request->input('mc'),
-        ]);
+        $validated = $request->validated();
+        $mageSpell =  MageSpell::create($validated);
+
+        $mageSpellName = preg_replace('/[^A-Za-z0-9\-]/', '_', $mageSpell->name);
+
+        if ($request->hasFile('thumbnail')) {
+            $ext = $request->file('thumbnail')->guessExtension();
+            $fileName = $request->file('thumbnail')->getClientOriginalName();
+            $path = $request->file('thumbnail')->storeAs('thumbnails', $mageSpell->id .'_'.$fileName.'_'.$mageSpellName . '_MageSpell.' . $ext );
+            $mageSpell->image()->save(
+                Image::create(['path'=>$path])
+            );
+        }
 
        // dd($playerClass->id);
         $mageSpell->save();
@@ -91,17 +101,31 @@ class MageSpellController extends Controller
      * @param  \App\Models\MageSpell  $mageSpell
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreMageSpell $request, $id)
     {
         $mageSpell = MageSpell::findOrFail($id);
-
-        $validated['name'] = $request->get('name');
-        $validated['level'] = $request->get('level');
-        $validated['dice'] = $request->get('dice');
-        $validated['mc'] = $request->get('mc');
-        
+        //$this->authorize('update', $mageSpell);
+        $validated = $request->validated();
         $mageSpell ->fill($validated);
+
+        $mageSpellName = preg_replace('/[^A-Za-z0-9\-]/', '_', $mageSpell->name);
        
+        if ($request->hasFile('thumbnail')) {
+            $ext = $request->file('thumbnail')->guessExtension();
+            $fileName = $request->file('thumbnail')->getClientOriginalName();
+            $path = $request->file('thumbnail')->storeAs('thumbnails', $mageSpell->id .'_'.$fileName.'_'.$mageSpellName . '_MageSpell.' . $ext );
+
+            if ($mageSpell->image) {
+                Storage::delete($mageSpell->image->path);
+                $mageSpell->image->path = $path;
+                $mageSpell->image->save();
+            } else {
+                $mageSpell->image()->save(
+                    Image::create(['path'=>$path])
+                );
+            }
+            
+        }
         
         $mageSpell->save();
         $request->session()->flash('status', 'Spell Updated');
@@ -117,6 +141,10 @@ class MageSpellController extends Controller
     public function destroy(Request $request, $id)
     {
         $mageSpell = MageSpell::findOrFail($id);
+        if ($mageSpell->image) {
+            Storage::delete($mageSpell->image->path);
+            $mageSpell->image->delete();
+        }
 
         $mageSpell->delete();
 

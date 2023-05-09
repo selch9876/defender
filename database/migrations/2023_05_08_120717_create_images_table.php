@@ -21,6 +21,14 @@ class CreateImagesTable extends Migration
             $table->unsignedBigInteger('player_class_id')->nullable();
             $table->unsignedBigInteger('monster_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('item_id')->references('id')->on('items')
+            ->onDelete('cascade');
+            $table->foreign('mage_spell_id')->references('id')->on('mage_spells')
+            ->onDelete('cascade');
+            $table->foreign('monster_id')->references('id')->on('monsters')
+            ->onDelete('cascade');
+            
         });
     }
 

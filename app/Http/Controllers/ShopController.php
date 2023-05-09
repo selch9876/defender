@@ -18,7 +18,7 @@ class ShopController extends Controller
     {
         $items = Item::all();
         $gold = $character->gold;
-        dd($character);
+        //dd($character);
 
         return view('shop.index', compact('items', 'gold', 'character'));
     }

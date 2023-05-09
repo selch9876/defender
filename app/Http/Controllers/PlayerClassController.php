@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\PlayerClass;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePlayerClass;
+use Illuminate\Support\Facades\Storage;
 
 class PlayerClassController extends Controller
 {
@@ -42,20 +45,23 @@ class PlayerClassController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePlayerClass $request)
     {
-        
-        $playerClass = new PlayerClass([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'base_health' => $request->input('base_health'),
-            'base_resistance' => $request->input('base_resistance'),
-            'base_attack' => $request->input('base_attack'),
-            'base_defence' => $request->input('base_defence'),
-            'special_ability' => $request->input('special_ability'),
-        ]);
+        $validated = $request->validated();
 
-       // dd($playerClass->id);
+        $playerClass =  PlayerClass::create($validated);
+
+        $className = preg_replace('/[^A-Za-z0-9\-]/', '_', $playerClass->name);
+
+        if ($request->hasFile('thumbnail')) {
+            $ext = $request->file('thumbnail')->guessExtension();
+            $fileName = $request->file('thumbnail')->getClientOriginalName();
+            $path = $request->file('thumbnail')->storeAs('thumbnails', $playerClass->id .'_'.$fileName.'_'.$className . '_PlayerClass.' . $ext );
+            $playerClass->image()->save(
+                Image::create(['path'=>$path])
+            );
+        }
+
         $playerClass->save();
         
         return redirect()->route('player-class.show', ['player_class' => $playerClass->id]);
@@ -96,19 +102,30 @@ class PlayerClassController extends Controller
      * @param  \App\Models\PlayerClass  $playerClass
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePlayerClass $request, $id)
     {
         $playerClass = PlayerClass::findOrFail($id);
-
-        $validated['name'] = $request->get('name');
-        $validated['description'] = $request->get('description');
-        $validated['base_health'] = $request->get('base_health');
-        $validated['base_resistance'] = $request->get('base_resistance');
-        $validated['base_attack'] = $request->get('base_attack');
-        $validated['base_defence'] = $request->get('base_defence');
-        $validated['special_ability'] = $request->get('special_ability');
-        
+        $validated = $request->validated();
         $playerClass ->fill($validated);
+
+        $className = preg_replace('/[^A-Za-z0-9\-]/', '_', $playerClass->name);
+
+        if ($request->hasFile('thumbnail')) {
+            $ext = $request->file('thumbnail')->guessExtension();
+            $fileName = $request->file('thumbnail')->getClientOriginalName();
+            $path = $request->file('thumbnail')->storeAs('thumbnails', $playerClass->id .'_'.$fileName.'_'.$className . '_PlayerClass.' . $ext );
+
+            if ($playerClass->image) {
+                Storage::delete($playerClass->image->path);
+                $playerClass->image->path = $path;
+                $playerClass->image->save();
+            } else {
+                $playerClass->image()->save(
+                    Image::create(['path'=>$path])
+                );
+            }
+            
+        }
        
         
         $playerClass->save();
@@ -125,7 +142,10 @@ class PlayerClassController extends Controller
     public function destroy(Request $request, $id)
     {
         $playerClass = PlayerClass::findOrFail($id);
-
+        if ($playerClass->image) {
+            Storage::delete($playerClass->image->path);
+            $playerClass->image->delete();
+        }
         $playerClass->delete();
 
         $request->session()->flash('status', 'Class was deleted!');

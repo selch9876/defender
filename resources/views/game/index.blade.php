@@ -9,19 +9,30 @@
         </div>
         <div class="row">
             <div class="col">
+            
                 <form method="POST" action="{{ route('start-game') }}">
                 @csrf
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="{{ $character->playerClass->image->url() }}" class="img-fluid rounded-start" alt="..." width="50%">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ $character->name }}</h5>
+                          <p class="card-text">Class: {{ $character->playerClass->name }}</p>
+                          <p class="card-text">Level: {{ $character->level }}</p>
+                          <p class="card-text">HP: {{ $character->hp }}</p>
+                          @if ($character->playerClass->id == 2)
+                          <p class="card-text">Mana Power: {{ $character->mp }}</p>
+                          @endif
+                          <p class="card-text"><small class="text-body-secondary">XP: {{ $character->xp }}</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 
                 <input type="hidden" name="character_id" value="{{ $character->id }}" id="{{ $character->id }}" required>
-                <strong>{{ $character->name }}</strong> (Level {{ $character->level }}  {{ $character->playerClass->name }})
-                <br>
-                Health: {{ $character->hp }}
-                <br>
-                    @if ($character->playerClass->id == 2)
-                    Mana Power: {{ $character->mp }}
-                    <br>
-                    @endif
-                Experience: {{ $character->xp }}
                         
                 <button type="submit">Start Game</button>
                 </form>

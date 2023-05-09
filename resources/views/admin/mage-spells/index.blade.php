@@ -28,6 +28,7 @@
                                         <th>{{ __('Level') }}</th>
                                         <th>{{ __('Damage') }}</th>
                                         <th>{{ __('Mana Cost') }}</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -37,6 +38,14 @@
                                             <td>{{ $spell->level }}</td>
                                             <td>{{ $spell->dice }}</td>
                                             <td>{{ $spell->mc }}</td>
+                                            <td class="text-right col-2">
+                                                @if ($spell->image)
+                                                  <img src="{{ $spell->image->url() }}" alt="" width="50%">
+                                                @else
+                                                  <img src="" alt="">
+                                                @endif
+                                              </td>
+                                            <td>
                                             <td>
                                                 <a href="{{ route('mage-spell.show', $spell->id) }}" class="btn btn-sm btn-primary">{{ __('View') }}</a>
                                                 <a href="{{ route('mage-spell.edit', $spell->id) }}" class="btn btn-sm btn-secondary">{{ __('Edit') }}</a>
