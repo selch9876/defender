@@ -70,7 +70,7 @@ class FightController extends Controller
             return redirect()->route('win', ['id' => $fight->id]);
         }
         $attacker->takeDamage($defenderDamage);
-
+        $attacker->save();
         if ($attacker->isDead()) {
             $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' 
             . $damage . ' damage and ' .$attacker->name . ' is dead!');

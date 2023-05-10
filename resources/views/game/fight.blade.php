@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col">
                 <div class="battle-character">
-                    <img src="character.png">
+                    <img src="{{ $character->playerClass->image->url() }}">
                     <div class="battle-character-info">
                       <h2>{{ $character->name }}</h2>
                       <p>Health: <span id="character-health">{{ $character->hp }}</span></p>

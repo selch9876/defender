@@ -48,9 +48,7 @@ class PlayerClassController extends Controller
     public function store(StorePlayerClass $request)
     {
         $validated = $request->validated();
-
         $playerClass =  PlayerClass::create($validated);
-
         $className = preg_replace('/[^A-Za-z0-9\-]/', '_', $playerClass->name);
 
         if ($request->hasFile('thumbnail')) {
@@ -63,7 +61,6 @@ class PlayerClassController extends Controller
         }
 
         $playerClass->save();
-        
         return redirect()->route('player-class.show', ['player_class' => $playerClass->id]);
     }
 

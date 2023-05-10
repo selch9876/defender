@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	  {{-- <link rel="icon" href="images/favicon.ico" type="image/ico" /> --}}
-    <link rel="shortcut icon" href="{{ asset('storage/images/adnd_logo_icon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('storage/images/DnD-Symbol_icon.png') }}">
 
     <title>@yield('title') </title>
 

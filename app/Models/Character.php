@@ -67,7 +67,7 @@ class Character extends Model
 
     public function items()
     {
-        return $this->belongsToMany(Item::class)->withPivot('quantity');
+        return $this->belongsToMany(Item::class)->withPivot('quantity', 'equipped');
     }
 
     public function inventory()
@@ -96,7 +96,7 @@ class Character extends Model
 
     public function getEquippedWeapon()
     {
-        return $this->items()->where('type', 'weapon')->first();
+        return $this->items()->where('type', 'weapon')->wherePivot('equipped', 'Equipped')->first();
     }
     
     //Combat Methods
@@ -131,12 +131,9 @@ class Character extends Model
             if ($this->hp < 0) {
                 $this->hp = 0;
             }
-
             return $damage - $this->getDefence();
         }
-        
         $this->save();
-        
         return 0;
     }
 

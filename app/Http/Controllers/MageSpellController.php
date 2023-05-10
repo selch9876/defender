@@ -104,7 +104,7 @@ class MageSpellController extends Controller
     public function update(StoreMageSpell $request, $id)
     {
         $mageSpell = MageSpell::findOrFail($id);
-        //$this->authorize('update', $mageSpell);
+        
         $validated = $request->validated();
         $mageSpell ->fill($validated);
 

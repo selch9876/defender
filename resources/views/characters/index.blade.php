@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -24,7 +24,6 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th></th>
                                         <th>{{ __('Name') }}</th>
                                         <th>{{ __('Class') }}</th>
                                         <th>{{ __('Level') }}</th>
@@ -38,18 +37,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <form method="POST" action="{{ route('select-character') }}">
+                                    @csrf
                                     @foreach($characters as $character)
                                         <tr>
                                             <td>
-                                                <form method="POST" action="{{ route('select-character') }}">
-                                                    @csrf
-                                                    <label><input type="checkbox" name="character" class=""  value="{{ $character->id }}" {{$character->id == session('selected_character_id')  ? 'checked' : ''}}></label>
-                                                    <button type="submit" class="btn btn-sm btn-primary">
-                                                        {{ __('Select') }}
-                                                    </button>
-                                                </form>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="character" value="{{ $character->id }}" id="character" {{$character->id == session('selected_character_id')  ? 'checked' : ''}}>
+                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                        {{ $character->name }}
+                                                    </label>
+                                                </div>    
                                             </td>
-                                            <td><h4>{{ $character->name }}</h4></td>
                                             <td>{{ $character->playerClass->name }}</td>
                                             <td>{{ $character->level }}</td>
                                             <td>{{ $character->xp }}</td>
@@ -58,17 +57,17 @@
                                             <td>{{ $character->str }}</td>
                                             <td>{{ $character->dex }}</td>
                                             <td>{{ $character->int }}</td>
+                                            
                                             <td>
                                                 <a href="{{ route('character.show', $character->id) }}" class="btn btn-sm btn-primary">{{ __('View') }}</a>
                                                 <a href="{{ route('character.edit', $character->id) }}" class="btn btn-sm btn-secondary">{{ __('Edit') }}</a>
-                                                <form method="POST" action="{{ route('character.destroy', $character->id) }}" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('{{ __('Are you sure?') }}')">{{ __('Delete') }}</button>
-                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            {{ __('Select') }}
+                                        </button>
+                                    </form>
                                 </tbody>
                             </table>
                         @endif

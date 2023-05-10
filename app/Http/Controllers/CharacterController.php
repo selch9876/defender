@@ -17,7 +17,6 @@ class CharacterController extends Controller
         ->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +27,13 @@ class CharacterController extends Controller
         $user = Auth::user();
         $characters = $user->characters()->get();
         return view('characters.index', compact('characters'));
+    }
+
+    public function inventory()
+    {
+        $user = Auth::user();
+        $character = Character::findOrFail(session('selected_character_id'));
+        return view('characters.inventory', compact('character'));
     }
 
     public function select(Request $request)
@@ -85,8 +91,6 @@ class CharacterController extends Controller
         $user->characters()->save($character);
         $character->save();
         $character->mageSpells()->attach($request->mage_spell_id);
-
-        
         return redirect()->route('character.show', $character->id);
     }
 
@@ -159,14 +163,40 @@ class CharacterController extends Controller
      * @param  \App\Models\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $character = Character::findOrFail($id);
-
         $character->delete();
-
         session()->flash('status', 'Character Deleted!');
-
         return redirect()->route('character.index');
+    }
+
+    // Inventory Methods
+    public function equipItem(Request $request)
+    {
+        $character = Character::findOrFail($request->input('character_id'));
+        $item = $character->items->where('id', $request->input('item_id'))->first();
+
+        if (!$item) {
+            return redirect()->back()->with('error', 'Item not found in inventory.');
+        }
+
+        $character->items()->updateExistingPivot($item->id, ['equipped' => 'Equipped']);
+
+        return redirect()->back()->with('success', 'Item equipped successfully!');
+    }
+
+    public function unequipItem(Request $request)
+    {
+        $character = Character::findOrFail($request->input('character_id'));
+        $item = $character->items->where('id', $request->input('item_id'))->first();
+
+        if (!$item) {
+            return redirect()->back()->with('error', 'Item not found in inventory.');
+        }
+
+        $character->items()->updateExistingPivot($item->id, ['equipped' => 'Unequipped']);
+
+        return redirect()->back()->with('success', 'Item unequipped successfully!');
     }
 }

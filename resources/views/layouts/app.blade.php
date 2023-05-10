@@ -3,14 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         
         <title>{{ config('app.name') }}</title>
         
-        <link rel="shortcut icon" href="{{ asset('storage/images/adnd_logo_icon.png') }}">
+        <link rel="shortcut icon" href="{{ asset('storage/images/DnD-Symbol_icon.png') }}">
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
@@ -60,6 +59,7 @@
                               </li>
                               <li><a class="dropdown-item" href="{{ url('/character') }}" class="text-sm">Characters</a></li>
                               <li><a class="dropdown-item" href="{{ url('/shop') }}" class="text-sm">Shop</a></li>
+                              <li><a class="dropdown-item" href="{{ url('/inventory') }}" class="text-sm">Inventory</a></li>
                             @else
                               <a href="{{ route('login') }}" class="text-sm">Log in</a>
       

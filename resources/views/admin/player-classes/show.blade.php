@@ -6,7 +6,11 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Class Details') }}</div>
-
+                        @if(session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>

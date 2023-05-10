@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FightController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MageSpellController;
 use App\Http\Controllers\PlayerClassController;
@@ -22,10 +23,10 @@ use App\Http\Controllers\PlayerClassController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
+// Route::get('/', function () {
+//     return view('home');
+// })->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 /* Route::get('/fight', function () {
     return view('game.fight')->name('fight');
 }); */
@@ -54,8 +55,18 @@ Route::resource('/mage-spell', MageSpellController::class);
 Route::resource('/item', ItemController::class);
 Route::resource('/user', UserController::class);
 
-
+// Character Routes
 Route::middleware('auth')->post('/select-character', [CharacterController::class, 'select'])->name('select-character');
+Route::put('/equip-item', [CharacterController::class, 'equipItem'])->name('equip-item');
+Route::put('/unequip-item', [CharacterController::class, 'unequipItem'])->name('unequip-item');
+Route::middleware(['auth', 'characterselected'])->get('/inventory', [CharacterController::class, 'inventory'])->name('inventory');
+
+
+
+//Shop Routes
+Route::middleware(['auth', 'characterselected'])->get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::middleware(['auth', 'characterselected'])->post('/shop/buy', [ShopController::class, 'buy'])->name('shop.buy');
+Route::middleware(['auth', 'characterselected'])->post('/shop/sell', [ShopController::class, 'sell'])->name('shop.sell');
 
 
 // Game Routes
@@ -68,11 +79,7 @@ Route::post('/cast', [FightController::class, 'cast'] )->name('fight.cast');
 Route::post('/start-game', [GameController::class, 'startGame'])->name('start-game');
 Route::get('/win/{id}', [FightController::class, 'win'])->name('win');
 
-//Shop Routes
-//Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-Route::post('/shop/buy', [ShopController::class, 'buy'])->name('shop.buy');
-Route::post('/shop/sell', [ShopController::class, 'sell'])->name('shop.sell');
-Route::middleware(['auth', 'characterselected'])->get('/shop', [ShopController::class, 'index'])->name('shop');
+
 
 
 
