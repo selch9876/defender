@@ -60,6 +60,7 @@
                               <li><a class="dropdown-item" href="{{ url('/character') }}" class="text-sm">Characters</a></li>
                               <li><a class="dropdown-item" href="{{ url('/shop') }}" class="text-sm">Shop</a></li>
                               <li><a class="dropdown-item" href="{{ url('/inventory') }}" class="text-sm">Inventory</a></li>
+                              <li><a class="dropdown-item" href="{{ url('/quests') }}" class="text-sm">Quest</a></li>
                             @else
                               <a href="{{ route('login') }}" class="text-sm">Log in</a>
       

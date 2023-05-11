@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MageSpellController;
 use App\Http\Controllers\PlayerClassController;
+use App\Http\Controllers\QuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::get('/admin/players', [AdminController::class, 'players'])->name('admin.p
 Route::get('/admin/player-classes', [AdminController::class, 'playerClasses'])->name('admin.player-classes');
 Route::get('/admin/mage-spells', [AdminController::class, 'mageSpells'])->name('admin.mage-spells');
 Route::get('/admin/items', [AdminController::class, 'items'])->name('admin.items');
+Route::get('/admin/quests', [AdminController::class, 'quests'])->name('admin.quests');
 
 //Game Routes
 Route::resource('/game', GameController::class)->except(['index']);
@@ -54,6 +56,14 @@ Route::resource('/player-class', PlayerClassController::class);
 Route::resource('/mage-spell', MageSpellController::class);
 Route::resource('/item', ItemController::class);
 Route::resource('/user', UserController::class);
+
+// Quest Routes
+Route::resource('/quest', QuestController::class)->except(['index'])->except(['accept']);
+Route::get('/quests', [QuestController::class, 'index'])->name('quests.index');
+Route::get('/quests/{id}', [QuestController::class, 'show'])->name('quests.show');
+Route::post('/quests/{id}/accept', [QuestController::class, 'accept'])->name('quests.accept');
+Route::post('/quests/{id}/complete', [QuestController::class, 'complete'])->name('quests.complete');
+
 
 // Character Routes
 Route::middleware('auth')->post('/select-character', [CharacterController::class, 'select'])->name('select-character');

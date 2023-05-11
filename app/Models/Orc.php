@@ -19,5 +19,6 @@ class Orc extends Monster
         $this->attributes['health'] = 120;
         $this->attributes['damage'] = 3;
         $this->attributes['xp'] = 100;
+        $this->attributes['gold'] = 50;
     }
 }

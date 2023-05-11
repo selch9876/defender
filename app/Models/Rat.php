@@ -19,5 +19,6 @@ class Rat extends Model
         $this->attributes['health'] = 5;
         $this->attributes['damage'] = 1;
         $this->attributes['xp'] = 5;
+        $this->attributes['gold'] = 2;
     }
 }

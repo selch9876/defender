@@ -30,6 +30,12 @@
             <li><a href="{{ route('admin.items') }}">Items</a></li>
           </ul>
         </li>
+        <li><a><i class="fa fa-user"></i> Quests <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="{{ route('quest.create') }}">Add Quest</a></li>
+            <li><a href="{{ route('admin.quests') }}">Quests</a></li>
+          </ul>
+        </li>
         <li><a><i class="fa fa-user"></i> Players <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="{{ route('admin.players') }}">Players</a></li>

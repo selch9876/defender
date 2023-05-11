@@ -57,6 +57,7 @@ class FightController extends Controller
         
         if ($defender->isDead()) {
             $attacker->xp += $defender->xp;
+            $attacker->gold += $defender->gold;
             if (floor($attacker->xp / 100) >= $attacker->level) {
                 $dif = ($attacker->xp / 100) - $attacker->level;
                 for ($i=0; $i < $dif; $i++) { 
@@ -70,6 +71,7 @@ class FightController extends Controller
             return redirect()->route('win', ['id' => $fight->id]);
         }
         $attacker->takeDamage($defenderDamage);
+        $finalDamage = $defenderDamage - $attacker->getDefence();
         $attacker->save();
         if ($attacker->isDead()) {
             $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' 
@@ -89,7 +91,7 @@ class FightController extends Controller
         }
         $round->addTurn($attacker, $defender, $damage);
         $request->session()->flash('status', $attacker->name . ' Hits '. $defender->name. ' for ' 
-        . $damage . ' damage! ' . $defender->name . ' Hits '. $attacker->name. ' for ' . $defenderDamage . ' damage!');
+        . $damage . ' damage! ' . $defender->name . ' Hits '. $attacker->name. ' for ' . $finalDamage . ' damage!');
         return redirect()->route('fight', ['id' => $fight->id]);
     }
 
@@ -111,6 +113,7 @@ class FightController extends Controller
         
         if ($defender->isDead()) {
             $attacker->xp += $defender->xp;
+            $attacker->gold += $defender->gold;
             if (floor($attacker->xp / 100) >= $attacker->level) {
                 $attacker->levelUp();
             }
@@ -240,6 +243,7 @@ class FightController extends Controller
         
         if ($defender->isDead()) {
             $attacker->xp += $defender->xp;
+            $attacker->gold += $defender->gold;
             if (floor($attacker->xp / 100) >= $attacker->level) {
                 $attacker->levelUp();
             }

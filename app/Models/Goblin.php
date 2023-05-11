@@ -19,5 +19,6 @@ class Goblin extends Model
         $this->attributes['health'] = 10;
         $this->attributes['damage'] = 2;
         $this->attributes['xp'] = 10;
+        $this->attributes['gold'] = 5;
     }
 }

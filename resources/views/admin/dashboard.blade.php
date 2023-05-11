@@ -64,6 +64,16 @@
         
       </div>
     </div>
+    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+      <div class="tile-stats">
+        <div class="icon"><i class="fa fa-user"></i>
+        </div>
+        <div class="count">{{  count($quests); }}</div>
+
+        <h3><a href="{{ route('admin.quests') }}">Quests</a></h3>
+        
+      </div>
+    </div>
 
   </div>
 

@@ -19,5 +19,6 @@ class Dragon extends Monster
         $this->attributes['health'] = 500;
         $this->attributes['damage'] = 10;
         $this->attributes['xp'] = 500;
+        $this->attributes['gold'] = 5000;
     }
 }

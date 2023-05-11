@@ -26,6 +26,11 @@
                           @if ($character->playerClass->id == 2)
                           <p class="card-text">Mana Power: {{ $character->mp }}</p>
                           @endif
+                          @if ($character->getEquippedWeapon())
+                          <p>Weapon: <span id="character-health">{{ $character->getEquippedWeapon()->name }}</span></p>
+                          @else
+                          <p>Weapon: <span id="character-health">None!</span></p>
+                          @endif
                           <p class="card-text"><small class="text-body-secondary">XP: {{ $character->xp }}</small></p>
                         </div>
                       </div>

@@ -75,7 +75,17 @@ class Character extends Model
         return $this->belongsTo(Inventory::class);
     }
 
+    public function quests()
+    {
+        return $this->belongsToMany(Quest::class);
+    }
+
     // Methods
+
+    public function canAcceptQuest(Quest $quest)
+    {
+        return !$this->quests()->where('quest_id', $quest->id)->exists();
+    }
     
     public function getInventory()
     {
@@ -131,8 +141,10 @@ class Character extends Model
             if ($this->hp < 0) {
                 $this->hp = 0;
             }
-            return $damage - $this->getDefence();
+            $finalDamage = $damage - $this->getDefence();
+            return $finalDamage;
         }
+
         $this->save();
         return 0;
     }
