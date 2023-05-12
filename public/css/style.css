@@ -167,3 +167,39 @@ li
 	font-size: 24px;
   }
   
+  /* Map CSS */
+
+	table {
+	border-collapse: collapse;
+	}
+
+	td {
+		width: 216px;
+		height: 216px;
+		border: 1px solid black;
+		padding: 0;
+	}
+	.corner {
+		background-image: url(/tilesets/corner.png);
+	}
+
+	.filler {
+		background-image: url(/tilesets/filler.png);
+	}
+
+	.inner-corner {
+		background-image: url(/tilesets/inner_corner.png);
+	}
+
+	.side {
+		background-image: url(/tilesets/side.png);
+	}
+	#game-map {
+		position: relative;
+		z-index: 1;
+	  }
+	  
+	  img {
+		position: absolute;
+		z-index: 2;
+	  }

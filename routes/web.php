@@ -10,6 +10,7 @@ use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MageSpellController;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\PlayerClassController;
 use App\Http\Controllers\QuestController;
 
@@ -70,6 +71,11 @@ Route::middleware('auth')->post('/select-character', [CharacterController::class
 Route::put('/equip-item', [CharacterController::class, 'equipItem'])->name('equip-item');
 Route::put('/unequip-item', [CharacterController::class, 'unequipItem'])->name('unequip-item');
 Route::middleware(['auth', 'characterselected'])->get('/inventory', [CharacterController::class, 'inventory'])->name('inventory');
+
+// Map Routes
+Route::get('/map', [MapController::class, 'map'])->name('map');
+Route::post('/move-player', [MapController::class, 'movePlayer']);
+// Route::get('/map', [MapController::class, 'index'])->name('map');
 
 
 

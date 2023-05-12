@@ -72,6 +72,9 @@ class FightController extends Controller
         }
         $attacker->takeDamage($defenderDamage);
         $finalDamage = $defenderDamage - $attacker->getDefence();
+        if ($finalDamage < 0) {
+            $finalDamage = 0;
+        }
         $attacker->save();
         if ($attacker->isDead()) {
             $request->session()->flash('status', $defender->name . ' Hits '. $attacker->name. ' for ' 
