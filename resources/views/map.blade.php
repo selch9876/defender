@@ -8,7 +8,7 @@
             @for ($y = 0; $y < $height; $y++)
                 <tr>
                     @for ($x = 0; $x < $width; $x++)
-                        <td>
+                        <td @if ($x === $player['x'] && $y === $player['y']) class="player" @endif>
                             @if ($y == 0 && $x == 0)
                                 <img src="{{ asset('storage/tilesets/top_left_corner.png') }}">
                             @elseif ($y == 0 && $x == $width - 1)
@@ -35,54 +35,45 @@
                                     <img src="{{ asset($object['image']) }}" style="position: absolute; top: 0; left: 0;">
                                 @endif
                             @endforeach
-
-                            
-                                <img src="{{ asset($player['image']) }}" style="position: absolute; top: 0; left: 0;">
-                           
-                        
+                            <img src="{{ asset($player['image']) }}" style="position: absolute; top: 0; left: 0;" class="">
                         </td>
                     @endfor
                 </tr>
             @endfor
         </table>
-    
+        
 </div>
-<div id="player">
-    <img src="{{ asset('storage/thumbnails/warrior.png') }}">
-</div>
+
 
 <script>
-    const map = document.getElementById('game-map');
-    let playerX = 0;
-    let playerY = 0;
+const map = document.getElementById('game-map');
+let playerX = 0;
+let playerY = 0;
 
-    document.addEventListener('keydown', event => {
-        if (event.key === 'ArrowUp') {
-            playerY--;
-        } else if (event.key === 'ArrowDown') {
-            playerY++;
-        } else if (event.key === 'ArrowLeft') {
-            playerX--;
-        } else if (event.key === 'ArrowRight') {
-            playerX++;
-        }
+document.addEventListener('keydown', event => {
+    if (event.key === 'ArrowUp') {
+        playerY--;
+    } else if (event.key === 'ArrowDown') {
+        playerY++;
+    } else if (event.key === 'ArrowLeft') {
+        playerX--;
+    } else if (event.key === 'ArrowRight') {
+        playerX++;
+    }
 
-        // Update the player position on the map
-        const cells = map.querySelectorAll('td');
-        const cellCount = cells.length;
+    // Remove the previous player position class
+    const previousCell = map.querySelector('.player');
+    if (previousCell) {
+        previousCell.classList.remove('player');
+    }
 
-        for (let i = 0; i < cellCount; i++) {
-            cells[i].style.position = 'relative';
-            cells[i].innerHTML = '';
-
-            if (i === playerY * {{ $width }} + playerX) {
-                const playerImg = document.createElement('img');
-                playerImg.src = '{{ asset('storage/thumbnails/1_Warrior_1.png_Warrior_PlayerClass.png') }}';
-                playerImg.style.position = 'absolute';
-                cells[i].appendChild(playerImg);
-            }
-        }
-    });
+    // Update the player position on the map
+    if (playerY >= 0 && playerY < {{ $height }} && playerX >= 0 && playerX < {{ $width }}) {
+        const playerIndex = playerY * {{ $width }} + playerX;
+        const playerCell = map.querySelectorAll('td')[playerIndex];
+        playerCell.classList.add('player');
+    }
+});
 </script>
 
 @endsection

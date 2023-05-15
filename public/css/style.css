@@ -169,11 +169,11 @@ li
   
   /* Map CSS */
 
-	table {
+  #game-map table {
 	border-collapse: collapse;
 	}
 
-	td {
+	#game-map td {
 		width: 216px;
 		height: 216px;
 		border: 1px solid black;
@@ -197,9 +197,17 @@ li
 	#game-map {
 		position: relative;
 		z-index: 1;
-	  }
-	  
-	  img {
+	}
+	
+	#game-map img {
+	position: absolute;
+	z-index: 2;
+	}
+
+	.player {
 		position: absolute;
-		z-index: 2;
-	  }
+		background-color: #000000;  /* Example styling */
+		z-index: 99;
+	}
+
+	
