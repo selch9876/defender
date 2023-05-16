@@ -11,8 +11,8 @@ class MapController extends Controller
     {
         $character = Character::findOrFail(session('selected_character_id'));
         $tileset = asset('storage/tilesets/filler.png');
-        $width = 6;
-        $height = 6;
+        $width = 4;
+        $height = 4;
         $x = $request->input('x');
         $y = $request->input('y');
         $player = [
@@ -21,9 +21,9 @@ class MapController extends Controller
             'image' => $character->playerClass->image->url()
         ];
         $objects = [
-            ['x' => 3, 'y' => 5, 'image' => 'storage/objects/scroll.png'],
-            ['x' => 3, 'y' => 2, 'image' => 'storage/objects/fire.png'],
-            ['x' => 3, 'y' => 8, 'image' => 'storage/objects/chest.png']
+            ['x' => $height - rand($height, $height-1 ), 'y' => $width - rand($width, $width-1 ), 'image' => 'storage/objects/scroll.png'],
+            ['x' => $height - rand($height, $height-1 ), 'y' => $width - rand($width, $width-1 ), 'image' => 'storage/objects/fire.png'],
+            ['x' => $height - rand($height, $height-1 ), 'y' => $width - rand($width, $width-1 ), 'image' => 'storage/objects/chest.png']
         ];
 
         //dd($map);

@@ -73,7 +73,7 @@ Route::put('/unequip-item', [CharacterController::class, 'unequipItem'])->name('
 Route::middleware(['auth', 'characterselected'])->get('/inventory', [CharacterController::class, 'inventory'])->name('inventory');
 
 // Map Routes
-Route::get('/map', [MapController::class, 'map'])->name('map');
+Route::middleware(['auth', 'characterselected'])->get('/map', [MapController::class, 'map'])->name('map');
 Route::post('/move-player', [MapController::class, 'movePlayer']);
 // Route::get('/map', [MapController::class, 'index'])->name('map');
 

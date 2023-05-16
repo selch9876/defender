@@ -199,14 +199,15 @@ li
 		z-index: 1;
 	}
 	
-	#game-map img {
-	position: absolute;
+	#game-map  {
+	position: relative;
 	z-index: 2;
 	}
 
 	.player {
 		position: absolute;
-		background-color: #000000;  /* Example styling */
+		/* background-color: #B6813B;   */
+		background: rgba(0,0,0,0);
 		z-index: 99;
 	}
 

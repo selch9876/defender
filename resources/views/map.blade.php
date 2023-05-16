@@ -35,7 +35,8 @@
                                     <img src="{{ asset($object['image']) }}" style="position: absolute; top: 0; left: 0;">
                                 @endif
                             @endforeach
-                            <img src="{{ asset($player['image']) }}" style="position: absolute; top: 0; left: 0;" class="">
+                            <img src="{{ asset($player['image']) }}" style="position: absolute; top: 0; left: 0; display: none;" id="player-image">
+
                         </td>
                     @endfor
                 </tr>
@@ -46,18 +47,20 @@
 
 
 <script>
+
 const map = document.getElementById('game-map');
 let playerX = 0;
 let playerY = 0;
+let playerImage = null;
 
 document.addEventListener('keydown', event => {
-    if (event.key === 'ArrowUp') {
+    if (event.key === 'ArrowUp' && playerY > 0) {
         playerY--;
-    } else if (event.key === 'ArrowDown') {
+    } else if (event.key === 'ArrowDown' && playerY < {{ $height - 1 }}) {
         playerY++;
-    } else if (event.key === 'ArrowLeft') {
+    } else if (event.key === 'ArrowLeft' && playerX > 0) {
         playerX--;
-    } else if (event.key === 'ArrowRight') {
+    } else if (event.key === 'ArrowRight' && playerX < {{ $width - 1 }}) {
         playerX++;
     }
 
@@ -72,9 +75,31 @@ document.addEventListener('keydown', event => {
         const playerIndex = playerY * {{ $width }} + playerX;
         const playerCell = map.querySelectorAll('td')[playerIndex];
         playerCell.classList.add('player');
+
+        // Create the player image element if it doesn't exist
+        if (!playerImage) {
+            playerImage = document.createElement('img');
+            playerImage.src = '{{ asset($player['image']) }}';
+            playerImage.style.position = 'absolute';
+            playerImage.style.top = '0';
+            playerImage.style.left = '0';
+            playerImage.style.width = '100%';
+            playerImage.style.height = '100%';
+        }
+
+        // Append the player image to the current cell
+        playerCell.appendChild(playerImage);
+    } else {
+        // Remove the player image if the player is outside the map boundaries
+        if (playerImage && playerImage.parentNode) {
+            playerImage.parentNode.removeChild(playerImage);
+        }
     }
 });
-</script>
 
+
+
+</script>
+<style></style>
 @endsection
 
