@@ -31,4 +31,9 @@ class Image extends Model
     {
         return $this->belongsTo(PlayerClass::class);
     }
+
+    public function gameObject()
+    {
+        return $this->belongsTo(GameObject::class);
+    }
 }

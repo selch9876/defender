@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FightController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\GameObjectController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MageSpellController;
@@ -46,6 +47,7 @@ Route::get('/admin/players', [AdminController::class, 'players'])->name('admin.p
 Route::get('/admin/player-classes', [AdminController::class, 'playerClasses'])->name('admin.player-classes');
 Route::get('/admin/mage-spells', [AdminController::class, 'mageSpells'])->name('admin.mage-spells');
 Route::get('/admin/items', [AdminController::class, 'items'])->name('admin.items');
+Route::get('/admin/game-objects', [AdminController::class, 'gameObjects'])->name('admin.game-objects');
 Route::get('/admin/quests', [AdminController::class, 'quests'])->name('admin.quests');
 
 //Game Routes
@@ -55,6 +57,7 @@ Route::middleware(['auth', 'characterselected'])->get('/game', [GameController::
 Route::resource('/character', CharacterController::class);
 Route::resource('/player-class', PlayerClassController::class);
 Route::resource('/mage-spell', MageSpellController::class);
+Route::resource('/game-object', GameObjectController::class);
 Route::resource('/item', ItemController::class);
 Route::resource('/user', UserController::class);
 

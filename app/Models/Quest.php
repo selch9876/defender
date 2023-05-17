@@ -21,4 +21,9 @@ class Quest extends Model
     {
         return $this->belongsToMany(Character::class, 'character_quest')->withPivot('status');        
     }
+
+    public function gameObjects()
+    {
+        return $this->belongsToMany(GameObject::class);        
+    }
 }

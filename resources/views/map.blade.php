@@ -28,13 +28,33 @@
                             @else
                                 <img src="{{ asset('storage/tilesets/filler.png') }}">
                             @endif
+                            
 
-
-                            @foreach ($objects as $object)
+                            {{-- @foreach ($objects as $object)
                                 @if ($object['x'] == $x && $object['y'] == $y)
                                     <img src="{{ asset($object['image']) }}" style="position: absolute; top: 0; left: 0;">
                                 @endif
-                            @endforeach
+                            @endforeach --}}
+
+                            @foreach ($objects as $object)
+                            @if ($object['x'] == $x && $object['y'] == $y)
+                                <img src="{{ $object->image->url() }}" style="
+                                position: absolute; 
+                                top: {{ $object['y'] }}; 
+                                left: {{ $object['x'] }}; " 
+                                class="mx-auto">
+
+                                @if ($x === $player['x'] && $y === $player['y'])
+                                    <!-- Perform action when player and object are on the same tile -->
+                                    <script>
+                                        // Example action: alert a message
+                                        window.addEventListener('DOMContentLoaded', function() {
+                                            alert('Player and object are on the same tile!');
+                                        });
+                                    </script>
+                                @endif
+                            @endif
+                        @endforeach
                             <img src="{{ asset($player['image']) }}" style="position: absolute; top: 0; left: 0; display: none;" id="player-image">
 
                         </td>
@@ -89,12 +109,21 @@ document.addEventListener('keydown', event => {
 
         // Append the player image to the current cell
         playerCell.appendChild(playerImage);
+
+            // Check for object interaction
+            const objectImages = playerCell.querySelectorAll('img');
+            if (objectImages.length > 3) {
+                // Perform action when player and object are on the same tile
+                alert('Player and object are on the same tile!');
+            }
     } else {
         // Remove the player image if the player is outside the map boundaries
         if (playerImage && playerImage.parentNode) {
             playerImage.parentNode.removeChild(playerImage);
         }
     }
+    
+    
 });
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Character;
+use App\Models\GameObject;
 use Illuminate\Http\Request;
 
 class MapController extends Controller
@@ -20,13 +21,10 @@ class MapController extends Controller
             'y' => $y,
             'image' => $character->playerClass->image->url()
         ];
-        $objects = [
-            ['x' => $height - rand($height, $height-1 ), 'y' => $width - rand($width, $width-1 ), 'image' => 'storage/objects/scroll.png'],
-            ['x' => $height - rand($height, $height-1 ), 'y' => $width - rand($width, $width-1 ), 'image' => 'storage/objects/fire.png'],
-            ['x' => $height - rand($height, $height-1 ), 'y' => $width - rand($width, $width-1 ), 'image' => 'storage/objects/chest.png']
-        ];
+        $objects = GameObject::all();
+        
 
-        //dd($map);
+        //dd( rand(0, $height-1 ));
         return view('map', compact('tileset', 'width', 'height', 'objects', 'player'));
 
         
