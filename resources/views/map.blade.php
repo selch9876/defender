@@ -8,7 +8,7 @@
             @for ($y = 0; $y < $height; $y++)
                 <tr>
                     @for ($x = 0; $x < $width; $x++)
-                        <td @if ($x === $player['x'] && $y === $player['y']) class="player" @endif>
+                        <td @if ($x === $player['x'] && $y === $player['y']) class="player" @endif style="position:relative">
                             @if ($y == 0 && $x == 0)
                                 <img src="{{ asset('storage/tilesets/top_left_corner.png') }}">
                             @elseif ($y == 0 && $x == $width - 1)
@@ -36,26 +36,26 @@
                                 @endif
                             @endforeach --}}
 
-                            @foreach ($objects as $object)
-                            @if ($object['x'] == $x && $object['y'] == $y)
-                                <img src="{{ $object->image->url() }}" style="
-                                position: absolute; 
-                                top: {{ $object['y'] }}; 
-                                left: {{ $object['x'] }}; " 
-                                class="mx-auto">
+                            @foreach ($mapObjects as $object)
+                                @if ($object['x'] == $x && $object['y'] == $y)
+                                    <img src="{{ $object->image->url() }}" style="
+                                    position: absolute; 
+                                    top: {{ $object['y'] }}; 
+                                    right: {{ $object['x'] * 10 }}%; " 
+                                    class="mx-auto">
 
-                                @if ($x === $player['x'] && $y === $player['y'])
-                                    <!-- Perform action when player and object are on the same tile -->
-                                    <script>
-                                        // Example action: alert a message
-                                        window.addEventListener('DOMContentLoaded', function() {
-                                            alert('Player and object are on the same tile!');
-                                        });
-                                    </script>
+                                    @if ($x === $player['x'] && $y === $player['y'])
+                                        <!-- Perform action when player and object are on the same tile -->
+                                        <script>
+                                            // Example action: alert a message
+                                            window.addEventListener('DOMContentLoaded', function() {
+                                                alert('Player and object are on the same tile!');
+                                            });
+                                        </script>
+                                    @endif
                                 @endif
-                            @endif
-                        @endforeach
-                            <img src="{{ asset($player['image']) }}" style="position: absolute; top: 0; left: 0; display: none;" id="player-image">
+                            @endforeach
+                            {{-- <img src="{{ asset($player['image']) }}" style="position: absolute; top: 0; left: 0; display: none;" id="player-image"> --}}
 
                         </td>
                     @endfor
@@ -112,7 +112,7 @@ document.addEventListener('keydown', event => {
 
             // Check for object interaction
             const objectImages = playerCell.querySelectorAll('img');
-            if (objectImages.length > 3) {
+            if (objectImages.length > 2) {
                 // Perform action when player and object are on the same tile
                 alert('Player and object are on the same tile!');
             }
@@ -126,7 +126,29 @@ document.addEventListener('keydown', event => {
     
 });
 
+window.addEventListener('beforeunload', function(event) {
+    // Send an AJAX request to delete the associated objects
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/maps/delete-objects', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send();
 
+    // Optionally, you can display a confirmation message
+    event.returnValue = 'Are you sure you want to leave this page?';
+});
+
+window.addEventListener('unload', function() {
+  // Perform an AJAX request to delete the map objects
+  fetch('/maps/delete-objects', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      // Pass any necessary data here
+    }),
+  });
+});
 
 </script>
 <style></style>

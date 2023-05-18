@@ -10,7 +10,7 @@ class Image extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['path', 'item_id', 'mage_spell_id', 'player_class_id', 'monster_id'];
+    protected $fillable = ['path', 'item_id', 'mage_spell_id', 'player_class_id', 'monster_id', 'game_object_id'];
 
     public function url()
     {
@@ -34,6 +34,11 @@ class Image extends Model
 
     public function gameObject()
     {
-        return $this->belongsTo(GameObject::class);
+        return $this->belongsTo(GameObject::class, 'game_object_id');
+    }
+
+    public function mapObject()
+    {
+        return $this->belongsTo(MapObject::class, 'map_object_id');
     }
 }

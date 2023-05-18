@@ -9,7 +9,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h1>Defender game management. </h1>
+      <h1>Defender Game Management. </h1>
       
       @errors @enderrors
     </div>
@@ -71,6 +71,16 @@
         <div class="count">{{  count($quests); }}</div>
 
         <h3><a href="{{ route('admin.quests') }}">Quests</a></h3>
+        
+      </div>
+    </div>
+    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+      <div class="tile-stats">
+        <div class="icon"><i class="fa fa-user"></i>
+        </div>
+        <div class="count">{{  count($gameObjects); }}</div>
+
+        <h3><a href="{{ route('admin.game-objects') }}">Objects</a></h3>
         
       </div>
     </div>

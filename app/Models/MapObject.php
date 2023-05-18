@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GameObject extends Model
+class MapObject extends Model
 {
     use HasFactory;
 
@@ -21,7 +21,7 @@ class GameObject extends Model
 
     public function image()
     {
-        return $this->hasOne(Image::class, 'game_object_id');
+        return $this->hasOne(Image::class, 'map_object_id');
     }
 
     public function quests()

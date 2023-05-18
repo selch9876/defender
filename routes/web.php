@@ -77,6 +77,7 @@ Route::middleware(['auth', 'characterselected'])->get('/inventory', [CharacterCo
 
 // Map Routes
 Route::middleware(['auth', 'characterselected'])->get('/map', [MapController::class, 'map'])->name('map');
+Route::get('/maps/delete-objects', [MapController::class, 'deleteMapObjects'])->name('maps.delete-objects');
 Route::post('/move-player', [MapController::class, 'movePlayer']);
 // Route::get('/map', [MapController::class, 'index'])->name('map');
 
