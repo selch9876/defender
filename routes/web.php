@@ -89,7 +89,7 @@ Route::middleware(['auth', 'characterselected'])->post('/shop/buy', [ShopControl
 Route::middleware(['auth', 'characterselected'])->post('/shop/sell', [ShopController::class, 'sell'])->name('shop.sell');
 
 
-// Game Routes
+// Fight Routes
 Route::get('/fight', [FightController::class, 'fight'] )->name('fight');
 Route::post('/attack', [FightController::class, 'attack'] )->name('fight.attack');
 Route::post('/defend', [FightController::class, 'defend'] )->name('fight.defend');

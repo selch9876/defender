@@ -18,7 +18,7 @@ class Fight extends Model
 
     public function monster()
     {
-        return $this->belongsTo(Monster::class);
+        return $this->belongsTo(Monster::class, 'monster_id');
     }
 
     public function character()
@@ -44,7 +44,7 @@ class Fight extends Model
     public function winner()
     {
         $monsterHealth = $this->monster->health;
-        $charactersHealth = $this->character->sum('hp');
+        $charactersHealth = $this->character->hp;
 
         if ($monsterHealth > 0 && $charactersHealth > 0) {
             // The fight is still ongoing, so return null
@@ -64,7 +64,7 @@ class Fight extends Model
     public function loser()
     {
         $monsterHealth = $this->monster->health;
-        $charactersHealth = $this->character->sum('hp');
+        $charactersHealth = $this->character->hp;
 
         if ($monsterHealth > 0 && $charactersHealth > 0) {
             // The fight is still ongoing, so return null
