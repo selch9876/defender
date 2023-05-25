@@ -28,6 +28,7 @@ class StoreGameObject extends FormRequest
             'x' => 'integer|numeric',
             'y' => 'integer|numeric',
             'thumbnail' => 'image',
+            'quest_id' => 'integer|numeric',
         ];
     }
 }

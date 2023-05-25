@@ -49,6 +49,7 @@ class MapController extends Controller
                 // Create a new Object instance
                 $object = new MapObject();
                 $object->name = $randomType->name;
+                $object->quest_id = $randomType->quest_id;
                 $object->x = $randomX;
                 $object->y = $randomY;
                 $object->save();

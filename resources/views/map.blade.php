@@ -42,7 +42,9 @@
                                     position: absolute; 
                                     top: {{ $object['y'] }}; 
                                     right: {{ $object['x'] * 10 }}%; " 
-                                    class="mx-auto">
+                                    class="mx-auto"
+                                    data-quest-id="{{ $object->quest_id ? $object->quest_id : null }}"
+                                    >
 
                                     @if ($x === $player['x'] && $y === $player['y'])
                                         <!-- Perform action when player and object are on the same tile -->

@@ -45,7 +45,7 @@
                     @foreach($quests as $quest)
                         <tr>
                             <td>{{ $quest->name }}</td>
-                            <td>{{ $quest->description }}</td>
+                            <td>{{ Str::words($quest->description, 10) }}</td>
                             <td>{{ $quest->reward_gold }}</td>
                             <td>{{ $quest->reward_exp }}</td>
                             <td>{{ $quest->required_level }}</td>

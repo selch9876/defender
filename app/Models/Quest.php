@@ -24,6 +24,11 @@ class Quest extends Model
 
     public function gameObjects()
     {
-        return $this->belongsToMany(GameObject::class);        
+        return $this->hasMany(GameObject::class);        
+    }
+
+    public function mapObjects()
+    {
+        return $this->hasMany(MapObject::class);        
     }
 }

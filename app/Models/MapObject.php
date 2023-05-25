@@ -9,7 +9,7 @@ class MapObject extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'x', 'y'];
+    protected $fillable = ['name', 'x', 'y', 'quest_id'];
 
     // public function __construct(array $attributes = [])
     // {

@@ -33,7 +33,7 @@
 
                             
 
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <label for="x" class="col-md-4 col-form-label text-md-right">{{ __('X') }}</label>
 
                                 <div class="col-md-6">
@@ -58,6 +58,18 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                </div>
+                            </div> --}}
+
+                            <div class="form-group row">            
+                                <label for="quest_id" class="col-md-4 col-form-label text-md-right">Select Quest </label>
+                                <div class="col-md-6">
+                                 <select name="quest_id" class="form-control">
+                                    <option value="">-quests-</option>
+                                   @foreach($quests as $quest)
+                                    <option value="{{ $quest->id }}" {{$gameObject->quest_id == $quest->id  ? 'selected' : ''}}>{{ $quest->name }}</option>
+                                   @endforeach
+                                 </select>
                                 </div>
                             </div>
 

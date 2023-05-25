@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\GameObject;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreGameObject;
+use App\Models\Quest;
 use Illuminate\Support\Facades\Storage;
 
 class GameObjectController extends Controller
@@ -47,6 +48,9 @@ class GameObjectController extends Controller
     {
         $validated = $request->validated();
         $gameObject =  GameObject::create($validated);
+        if ($request->get('quest_id')) {
+            $validated['quest_id'] = $request->get('quest_id');
+        }
 
         $objectName = preg_replace('/[^A-Za-z0-9\-]/', '_', $gameObject->name);
 
@@ -89,8 +93,10 @@ class GameObjectController extends Controller
     public function edit($id)
     {
         $gameObject = GameObject::findOrFail($id);
+        $quests = Quest::all();
         return view('admin.game-objects.edit', [
             'gameObject' => $gameObject,
+            'quests' => $quests,
         ]);
     }
 
@@ -105,7 +111,12 @@ class GameObjectController extends Controller
     {
         $gameObject = GameObject::findOrFail($id);
         $validated = $request->validated();
+        if ($request->get('quest_id')) {
+            $validated['quest_id'] = $request->get('quest_id');
+        }
         $gameObject ->fill($validated);
+
+        
 
         $objectName = preg_replace('/[^A-Za-z0-9\-]/', '_', $gameObject->name);
         

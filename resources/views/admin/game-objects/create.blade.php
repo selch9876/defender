@@ -60,7 +60,17 @@
                                 </div>
                             </div> --}}
 
-                            
+                            <div class="form-group row">            
+                                <label for="quest_id" class="col-md-4 col-form-label text-md-right">Select Quest </label>
+                                <div class="col-md-6">
+                                 <select name="quest_id" class="form-control">
+                                    <option value="">-quests-</option>
+                                   @foreach($quests as $quest)
+                                    <option value="{{ $quest->id }}">{{ $quest->name }}</option>
+                                   @endforeach
+                                 </select>
+                                </div>
+                            </div>
 
                             <div class="form-group row">
                                 <label for="thumbnail" class="col-md-4 col-form-label text-md-right">{{ __('Thumbnail') }}</label>
